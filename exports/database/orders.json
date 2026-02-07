@@ -1,0 +1,208 @@
+[
+  {
+    "_id": "698747d43a919c6398e3c652",
+    "id": "8375cc6b-2cc6-4785-be74-89fcb695285e",
+    "order_number": "ORD362432",
+    "user_id": "bc5bc287-aee2-45e5-bc28-b2bd7d3a2904",
+    "user_role": "retailer",
+    "items": [
+      {
+        "product_id": "prod_1",
+        "product_name": "Test Product",
+        "quantity": 2,
+        "price": 100.0,
+        "total": 200.0
+      }
+    ],
+    "subtotal": 200.0,
+    "gst_amount": 10.0,
+    "delivery_charges": 50.0,
+    "discount": 0.0,
+    "total_amount": 260.0,
+    "payment_mode": "cod",
+    "payment_status": "pending",
+    "order_status": "placed",
+    "delivery_address": {
+      "name": "Test Shop",
+      "phone": "9999999999",
+      "address": "Test Address",
+      "city": "Test City",
+      "pincode": "123456"
+    },
+    "delivery_slot": null,
+    "assigned_warehouse": null,
+    "assigned_delivery_agent": null,
+    "delivery_otp": "9413",
+    "created_at": "2026-02-07T14:10:28.556000",
+    "updated_at": "2026-02-07T14:10:28.556000"
+  },
+  {
+    "_id": "6987480de5cd9bd316b2c106",
+    "id": "f3cf8200-0897-4ff4-965e-ffbc07b06136",
+    "order_number": "ORD548657",
+    "user_id": "4438c31e-fed4-43d1-9686-c586b8391cb0",
+    "user_role": "retailer",
+    "items": [
+      {
+        "product_id": "prod_1",
+        "product_name": "Test Product",
+        "quantity": 2,
+        "price": 100.0,
+        "total": 200.0
+      }
+    ],
+    "subtotal": 200.0,
+    "gst_amount": 10.0,
+    "delivery_charges": 50.0,
+    "discount": 0.0,
+    "total_amount": 260.0,
+    "payment_mode": "cod",
+    "payment_status": "pending",
+    "order_status": "placed",
+    "delivery_address": {
+      "name": "Test Shop",
+      "phone": "9999999999",
+      "address": "Test Address",
+      "city": "Test City",
+      "pincode": "123456"
+    },
+    "delivery_slot": null,
+    "assigned_warehouse": null,
+    "assigned_delivery_agent": null,
+    "delivery_otp": "1885",
+    "created_at": "2026-02-07T14:11:25.938000",
+    "updated_at": "2026-02-07T14:11:25.938000"
+  },
+  {
+    "_id": "69874cd94b47c1d5c3aa2aef",
+    "id": "4c86405d-8b11-4c84-a230-364213c7e48a",
+    "order_number": "ORD600516",
+    "user_id": "6f98c2bd-033e-435e-9d85-72597846c7dd",
+    "user_role": "retailer",
+    "items": [
+      {
+        "product_id": "prod_4",
+        "product_name": "Lays Chips 100g",
+        "quantity": 1,
+        "price": 35.0,
+        "total": 35.0
+      },
+      {
+        "product_id": "prod_3",
+        "product_name": "Coca Cola 2L",
+        "quantity": 2,
+        "price": 75.0,
+        "total": 150.0
+      }
+    ],
+    "subtotal": 185.0,
+    "gst_amount": 9.25,
+    "delivery_charges": 50.0,
+    "discount": 0.0,
+    "total_amount": 244.25,
+    "payment_mode": "cod",
+    "payment_status": "pending",
+    "order_status": "placed",
+    "delivery_address": {
+      "name": "Shop",
+      "phone": "7980946310",
+      "address": "Shop Address",
+      "city": "City",
+      "pincode": "000000"
+    },
+    "delivery_slot": null,
+    "assigned_warehouse": null,
+    "assigned_delivery_agent": null,
+    "delivery_otp": "0188",
+    "created_at": "2026-02-07T14:31:53.619000",
+    "updated_at": "2026-02-07T14:31:53.619000"
+  },
+  {
+    "_id": "698752c34b47c1d5c3aa2af2",
+    "id": "6bf36c5d-963e-4f5f-a9f0-835aaaa72f30",
+    "order_number": "ORD425935",
+    "user_id": "3359cb01-ca58-4d1d-877f-5d15e3b80af9",
+    "user_role": "retailer",
+    "items": [
+      {
+        "product_id": "prod_1",
+        "product_name": "Test Product",
+        "quantity": 2,
+        "price": 100.0,
+        "total": 200.0
+      }
+    ],
+    "subtotal": 200.0,
+    "gst_amount": 10.0,
+    "delivery_charges": 50.0,
+    "discount": 0.0,
+    "total_amount": 260.0,
+    "payment_mode": "cod",
+    "payment_status": "pending",
+    "order_status": "placed",
+    "delivery_address": {
+      "name": "Test Shop",
+      "phone": "9999999999",
+      "address": "Test Address",
+      "city": "Test City",
+      "pincode": "123456"
+    },
+    "delivery_slot": null,
+    "assigned_warehouse": null,
+    "assigned_delivery_agent": null,
+    "delivery_otp": "2413",
+    "created_at": "2026-02-07T14:57:07.409000",
+    "updated_at": "2026-02-07T14:57:07.409000"
+  },
+  {
+    "_id": "698773415f4ff84bac82487f",
+    "id": "eef71ce2-514f-42ed-aafc-e851246ec194",
+    "order_number": "ORD281429",
+    "user_id": "6f98c2bd-033e-435e-9d85-72597846c7dd",
+    "user_role": "retailer",
+    "items": [
+      {
+        "product_id": "prod_1",
+        "product_name": "Tata Salt - Updated Test",
+        "quantity": 3,
+        "price": 25.0,
+        "total": 75.0
+      },
+      {
+        "product_id": "prod_2",
+        "product_name": "Fortune Refined Oil 1L",
+        "quantity": 1,
+        "price": 145.0,
+        "total": 145.0
+      },
+      {
+        "product_id": "prod_3",
+        "product_name": "Coca Cola 2L",
+        "quantity": 1,
+        "price": 78.0,
+        "total": 78.0
+      }
+    ],
+    "subtotal": 298.0,
+    "gst_amount": 14.9,
+    "delivery_charges": 50.0,
+    "discount": 0.0,
+    "total_amount": 362.9,
+    "payment_mode": "cod",
+    "payment_status": "pending",
+    "order_status": "placed",
+    "delivery_address": {
+      "name": "Shop",
+      "phone": "7980946310",
+      "address": "Shop Address",
+      "city": "City",
+      "pincode": "000000"
+    },
+    "delivery_slot": null,
+    "assigned_warehouse": null,
+    "assigned_delivery_agent": null,
+    "delivery_otp": "8403",
+    "created_at": "2026-02-07T17:15:45.411000",
+    "updated_at": "2026-02-07T17:15:45.411000"
+  }
+]

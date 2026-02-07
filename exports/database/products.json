@@ -1,0 +1,143 @@
+[
+  {
+    "_id": "69874cdd0352cd561124a4b4",
+    "id": "prod_1",
+    "name": "Tata Salt - Updated Test",
+    "images": [
+      "https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?w=400"
+    ],
+    "category_id": "cat_1",
+    "mrp": 30,
+    "retailer_price": 25,
+    "customer_price": 26,
+    "stock_quantity": 197,
+    "is_active": true,
+    "updated_at": "2026-02-07T17:02:14.622000"
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b5",
+    "id": "prod_2",
+    "name": "Fortune Refined Oil 1L",
+    "images": [
+      "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400"
+    ],
+    "category_id": "cat_1",
+    "mrp": 165,
+    "retailer_price": 145,
+    "customer_price": 158,
+    "stock_quantity": 49,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b6",
+    "id": "prod_3",
+    "name": "Coca Cola 2L",
+    "images": [
+      "https://images.unsplash.com/photo-1651307426653-2b63a236ece5?w=400"
+    ],
+    "category_id": "cat_2",
+    "mrp": 95,
+    "retailer_price": 78,
+    "customer_price": 88,
+    "stock_quantity": 79,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b7",
+    "id": "prod_4",
+    "name": "Lays Classic 100g",
+    "images": [
+      "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400"
+    ],
+    "category_id": "cat_3",
+    "mrp": 30,
+    "retailer_price": 26,
+    "customer_price": 28,
+    "stock_quantity": 150,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b8",
+    "id": "prod_5",
+    "name": "Colgate MaxFresh 150g",
+    "images": [
+      "https://images.unsplash.com/photo-1585232350145-9e7e7e0c9faf?w=400"
+    ],
+    "category_id": "cat_4",
+    "mrp": 120,
+    "retailer_price": 102,
+    "customer_price": 115,
+    "stock_quantity": 60,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b9",
+    "id": "prod_6",
+    "name": "Aashirvaad Atta 5kg",
+    "images": [
+      "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=400"
+    ],
+    "category_id": "cat_1",
+    "mrp": 280,
+    "retailer_price": 245,
+    "customer_price": 270,
+    "stock_quantity": 75,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4ba",
+    "id": "prod_7",
+    "name": "India Gate Rice 5kg",
+    "images": [
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400"
+    ],
+    "category_id": "cat_1",
+    "mrp": 650,
+    "retailer_price": 580,
+    "customer_price": 620,
+    "stock_quantity": 40,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4bb",
+    "id": "prod_8",
+    "name": "Pepsi 2L",
+    "images": [
+      "https://images.unsplash.com/photo-1689910138858-5282476bf656?w=400"
+    ],
+    "category_id": "cat_2",
+    "mrp": 85,
+    "retailer_price": 70,
+    "customer_price": 80,
+    "stock_quantity": 100,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4bc",
+    "id": "prod_9",
+    "name": "Kurkure Masala 100g",
+    "images": [
+      "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=400"
+    ],
+    "category_id": "cat_3",
+    "mrp": 30,
+    "retailer_price": 26,
+    "customer_price": 28,
+    "stock_quantity": 200,
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4bd",
+    "id": "prod_10",
+    "name": "Dove Soap 100g x4",
+    "images": [
+      "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=400"
+    ],
+    "category_id": "cat_4",
+    "mrp": 195,
+    "retailer_price": 165,
+    "customer_price": 185,
+    "stock_quantity": 70,
+    "is_active": true
+  }
+]

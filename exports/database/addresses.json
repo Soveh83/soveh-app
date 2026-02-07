@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "69876a9ed990389b78015159",
+    "id": "5e306b1c-61b2-4d6a-9abf-853adaa2e72a",
+    "user_id": "7811f716-a73f-4ccc-aaab-7c6b67622d16",
+    "type": "shop",
+    "name": "My Shop",
+    "address": "123 Main Street, Mumbai",
+    "pincode": "400001",
+    "city": null,
+    "state": null,
+    "lat": 19.076,
+    "lng": 72.8777,
+    "is_default": true,
+    "created_at": "2026-02-07T16:38:54.788000"
+  },
+  {
+    "_id": "69876c62d990389b7801515c",
+    "id": "4a7d85a3-417e-4a0b-8ae3-810d03a0a122",
+    "user_id": "7811f716-a73f-4ccc-aaab-7c6b67622d16",
+    "type": "warehouse",
+    "name": "Warehouse",
+    "address": "456 Industrial Area",
+    "pincode": "400002",
+    "city": null,
+    "state": null,
+    "lat": 19.1,
+    "lng": 72.9,
+    "is_default": false,
+    "created_at": "2026-02-07T16:46:26.132000"
+  }
+]

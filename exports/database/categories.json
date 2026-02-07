@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "69874cdd0352cd561124a4b0",
+    "id": "cat_1",
+    "name": "Groceries",
+    "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400",
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b1",
+    "id": "cat_2",
+    "name": "Beverages",
+    "image": "https://images.unsplash.com/photo-1651307426653-2b63a236ece5?w=400",
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b2",
+    "id": "cat_3",
+    "name": "Snacks",
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=400",
+    "is_active": true
+  },
+  {
+    "_id": "69874cdd0352cd561124a4b3",
+    "id": "cat_4",
+    "name": "Personal Care",
+    "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400",
+    "is_active": true
+  }
+]
