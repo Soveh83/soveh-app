@@ -20,6 +20,8 @@ import razorpay
 from email_service import send_otp_email, send_order_notification, send_admin_notification
 from admin_auth import is_admin, verify_admin, get_user_by_uid
 from sms_service import sms_service
+from ai_service import ai_service
+from kyc_routes import kyc_router, set_db as set_kyc_db
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
