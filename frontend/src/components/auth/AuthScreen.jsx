@@ -11,7 +11,6 @@ import toast from 'react-hot-toast';
 
 const roles = [
   { id: 'retailer', name: 'Retailer', icon: Store, color: 'bg-blue-600', desc: 'Shop owners & wholesalers' },
-  { id: 'customer', name: 'Customer', icon: Users, color: 'bg-green-600', desc: 'End consumers' },
   { id: 'delivery_agent', name: 'Delivery', icon: Truck, color: 'bg-orange-600', desc: 'Delivery partners' },
   { id: 'admin', name: 'Admin', icon: Shield, color: 'bg-red-600', desc: 'Operations team' }
 ];
