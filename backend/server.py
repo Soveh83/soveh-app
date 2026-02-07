@@ -469,6 +469,9 @@ async def create_category(category: Category, current_user: User = Depends(get_c
     
     category_dict = category.dict()
     await db.categories.insert_one(category_dict)
+    # Remove MongoDB _id field for JSON serialization
+    if "_id" in category_dict:
+        del category_dict["_id"]
     return {"success": True, "category": category_dict}
 
 @api_router.get("/categories")
