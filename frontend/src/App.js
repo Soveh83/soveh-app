@@ -4,7 +4,6 @@ import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/authStore';
 import { AuthScreen } from './components/auth/AuthScreen';
 import { RetailerDashboard } from './components/retailer/RetailerDashboard';
-import { CustomerDashboard } from './components/customer/CustomerDashboard';
 import { DeliveryDashboard } from './components/delivery/DeliveryDashboard';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import './App.css';
@@ -20,15 +19,14 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Role-based Dashboard Router
+// Role-based Dashboard Router - Customer removed, defaults to Retailer
 const DashboardRouter = () => {
   const { role } = useAuthStore();
   
   switch (role) {
     case 'retailer':
+    case 'customer': // Redirect customers to retailer dashboard
       return <RetailerDashboard />;
-    case 'customer':
-      return <CustomerDashboard />;
     case 'delivery_agent':
       return <DeliveryDashboard />;
     case 'admin':
