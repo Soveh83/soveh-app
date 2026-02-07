@@ -101,25 +101,37 @@ class SreyanimtiAPITester:
             print("❌ Cannot proceed with auth tests - OTP sending failed")
             return False
         
-        # For test mode, try common test OTPs
-        test_otps = ["123456", "000000", "111111"]
+        # Extract OTP from test mode response
+        actual_otp = None
+        message = otp_response.get('message', '')
         
-        for test_otp in test_otps:
-            verify_data = {
-                "phone": test_phone,
-                "otp": test_otp,
-                "role": "retailer"
-            }
-            
-            verify_response = self.run_test(f"Verify OTP ({test_otp})", "POST", "auth/verify-otp", 200, verify_data)
-            
-            if verify_response and verify_response.get('success'):
-                self.token = verify_response.get('token')
-                self.user_id = verify_response.get('user', {}).get('id')
-                print(f"✅ Authentication successful with OTP: {test_otp}")
-                return True
+        # Look for "Test OTP: XXXXXX" pattern in message
+        import re
+        otp_match = re.search(r'Test OTP: (\d{6})', message)
+        if otp_match:
+            actual_otp = otp_match.group(1)
+            print(f"📱 Extracted test OTP: {actual_otp}")
         
-        print("❌ Authentication failed with all test OTPs")
+        if not actual_otp:
+            print("❌ Could not extract OTP from response")
+            return False
+        
+        # Test verify OTP with extracted OTP
+        verify_data = {
+            "phone": test_phone,
+            "otp": actual_otp,
+            "role": "retailer"
+        }
+        
+        verify_response = self.run_test(f"Verify OTP ({actual_otp})", "POST", "auth/verify-otp", 200, verify_data)
+        
+        if verify_response and verify_response.get('success'):
+            self.token = verify_response.get('token')
+            self.user_id = verify_response.get('user', {}).get('id')
+            print(f"✅ Authentication successful with OTP: {actual_otp}")
+            return True
+        
+        print("❌ Authentication failed with extracted OTP")
         return False
 
     def test_categories_api(self):
