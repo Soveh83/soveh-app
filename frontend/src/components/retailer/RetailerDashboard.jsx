@@ -47,48 +47,111 @@ export const RetailerDashboard = () => {
   const [showKYC, setShowKYC] = useState(false);
   const [profilePage, setProfilePage] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(true);
   const { user, logout } = useAuthStore();
   const cart = useCartStore();
 
-  // Auto-fetch current location
+  // Auto-fetch current location on mount
   useEffect(() => {
     fetchCurrentLocation();
   }, []);
 
-  const fetchCurrentLocation = () => {
+  const fetchCurrentLocation = async () => {
     setLocationLoading(true);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          try {
-            // Reverse geocoding
+    
+    // First check if geolocation is available
+    if (!navigator.geolocation) {
+      setCurrentLocation({ address: 'Location not supported', short: 'Set Location' });
+      setLocationLoading(false);
+      return;
+    }
+
+    // Request location with high accuracy
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log('Got location:', latitude, longitude);
+        
+        try {
+          // Try Google Maps reverse geocoding
+          const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
+          if (apiKey) {
             const response = await fetch(
-              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_KEY}`
+              `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
             );
             const data = await response.json();
-            if (data.results?.[0]) {
+            
+            if (data.status === 'OK' && data.results?.[0]) {
+              const result = data.results[0];
+              const locality = result.address_components?.find(c => 
+                c.types.includes('sublocality_level_1') || c.types.includes('sublocality')
+              )?.long_name;
+              const city = result.address_components?.find(c => 
+                c.types.includes('locality')
+              )?.long_name;
+              
               setCurrentLocation({
                 lat: latitude,
                 lng: longitude,
-                address: data.results[0].formatted_address,
-                short: data.results[0].address_components?.find(c => c.types.includes('sublocality'))?.long_name || 
-                       data.results[0].address_components?.find(c => c.types.includes('locality'))?.long_name || 'Current Location'
+                address: result.formatted_address,
+                short: locality || city || 'Current Location'
+              });
+              toast.success('Location detected!');
+            } else {
+              // Fallback if geocoding fails
+              setCurrentLocation({
+                lat: latitude,
+                lng: longitude,
+                address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
+                short: 'Current Location'
               });
             }
-          } catch (e) {
-            setCurrentLocation({ lat: latitude, lng: longitude, address: 'Current Location', short: 'Current Location' });
+          } else {
+            // No API key, use coordinates
+            setCurrentLocation({
+              lat: latitude,
+              lng: longitude,
+              address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
+              short: 'Current Location'
+            });
           }
-          setLocationLoading(false);
-        },
-        (error) => {
-          console.error('Location error:', error);
-          setCurrentLocation({ address: 'Location unavailable', short: 'Set Location' });
-          setLocationLoading(false);
+        } catch (error) {
+          console.error('Geocoding error:', error);
+          setCurrentLocation({
+            lat: latitude,
+            lng: longitude,
+            address: `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`,
+            short: 'Current Location'
+          });
         }
-      );
-    }
+        setLocationLoading(false);
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        let errorMsg = 'Location unavailable';
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            errorMsg = 'Permission denied';
+            toast.error('Please enable location access in your browser settings');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMsg = 'Position unavailable';
+            break;
+          case error.TIMEOUT:
+            errorMsg = 'Request timeout';
+            break;
+          default:
+            break;
+        }
+        setCurrentLocation({ address: errorMsg, short: 'Set Location' });
+        setLocationLoading(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 60000
+      }
+    );
   };
 
   // Handle profile sub-pages
