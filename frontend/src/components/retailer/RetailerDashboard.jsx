@@ -7,6 +7,8 @@ import { Card, Button, Badge, Spinner, Modal, StaggerContainer, StaggerItem, Pag
 import { AIChatbot } from '../ai/AIChatbot';
 import { KYCUpload } from '../kyc/KYCUpload';
 import { EditProfile, ManageAddresses, CreditDetails, ShopAnalytics } from '../profile/ProfilePages';
+import { LiveDeliveryTracker } from '../tracking/LiveTracking';
+import { initPushNotifications, pushService } from '../../lib/pushNotifications';
 import { 
   Home, Grid3X3, ShoppingCart, Package, User,
   Search, Bell, MapPin, ChevronRight, Plus, Minus,
@@ -16,6 +18,9 @@ import {
   HelpCircle, RotateCcw, ChevronDown, Gift, Flame, Target
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+// Initialize push notifications
+initPushNotifications();
 
 // SOVEH Logo Component
 const SovehLogo = ({ size = 'md' }) => {
