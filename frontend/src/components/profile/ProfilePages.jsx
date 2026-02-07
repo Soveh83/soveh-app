@@ -350,7 +350,7 @@ export const ManageAddresses = ({ onBack }) => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h4 className="font-semibold text-slate-900">{address.name}</h4>
-                    {address.isDefault && <Badge variant="success">Default</Badge>}
+                    {address.is_default && <Badge variant="success">Default</Badge>}
                   </div>
                   <p className="text-sm text-slate-600 mt-0.5">{address.address}</p>
                   <p className="text-xs text-slate-400 mt-0.5">PIN: {address.pincode}</p>
