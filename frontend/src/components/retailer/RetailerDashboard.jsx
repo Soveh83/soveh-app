@@ -7,7 +7,7 @@ import { Card, Button, Badge, Spinner, Modal, StaggerContainer, StaggerItem, Pag
 import { AIChatbot } from '../ai/AIChatbot';
 import { KYCUpload } from '../kyc/KYCUpload';
 import { EditProfile, ManageAddresses, CreditDetails, ShopAnalytics } from '../profile/ProfilePages';
-import { LiveDeliveryTracker } from '../tracking/LiveTracking';
+import { LiveTracking } from '../tracking/LiveTracking';
 import { initPushNotifications, pushService } from '../../lib/pushNotifications';
 import { 
   Home, Grid3X3, ShoppingCart, Package, User,
