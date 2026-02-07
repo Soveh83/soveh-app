@@ -277,7 +277,26 @@ const HomeTab = ({ currentLocation }) => {
       const res = await aiAPI.getRecommendations(cart.items);
       if (res.data.success && res.data.recommendations) {
         const recs = res.data.recommendations;
-        setRecommendations(typeof recs === 'string' ? recs : JSON.stringify(recs));
+        // Parse AI response properly
+        let formattedRecs = '';
+        if (typeof recs === 'string') {
+          // Try to parse JSON from string
+          try {
+            const parsed = JSON.parse(recs.replace(/```json|```/g, '').trim());
+            if (Array.isArray(parsed)) {
+              formattedRecs = parsed.slice(0, 3).map(r => `• ${r.product_name}: ${r.reason}`).join('\n');
+            } else {
+              formattedRecs = recs;
+            }
+          } catch {
+            formattedRecs = recs.replace(/```json|```|\[|\]|\{|\}/g, '').trim();
+          }
+        } else if (Array.isArray(recs)) {
+          formattedRecs = recs.slice(0, 3).map(r => `• ${r.product_name}: ${r.reason}`).join('\n');
+        } else {
+          formattedRecs = 'Stock up on cooking essentials like oil, rice, and snacks for maximum profit margins!';
+        }
+        setRecommendations(formattedRecs || 'Based on trends, consider stocking more beverages and snacks this week!');
       }
     } catch (e) {
       setRecommendations('Based on your purchase patterns, stock up on cooking oil, rice, and daily essentials for maximum margin!');
