@@ -138,7 +138,7 @@ class Product(BaseModel):
     mrp: float
     retailer_price: float
     customer_price: float
-    margin_percent: float
+    margin_percent: Optional[float] = 0.0
     stock_quantity: int
     min_order_qty: int = 1
     max_order_qty: Optional[int] = None
