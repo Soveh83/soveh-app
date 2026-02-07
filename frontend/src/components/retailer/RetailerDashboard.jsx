@@ -26,8 +26,25 @@ const tabs = [
 export const RetailerDashboard = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [showKYC, setShowKYC] = useState(false);
+  const [profilePage, setProfilePage] = useState(null); // edit-profile, addresses, credit, analytics
   const { user, logout } = useAuthStore();
   const cart = useCartStore();
+
+  // Handle profile sub-page navigation
+  if (profilePage) {
+    switch (profilePage) {
+      case 'edit-profile':
+        return <EditProfile user={user} onBack={() => setProfilePage(null)} />;
+      case 'addresses':
+        return <ManageAddresses onBack={() => setProfilePage(null)} />;
+      case 'credit':
+        return <CreditDetails onBack={() => setProfilePage(null)} />;
+      case 'analytics':
+        return <ShopAnalytics onBack={() => setProfilePage(null)} />;
+      default:
+        break;
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 pb-24">
