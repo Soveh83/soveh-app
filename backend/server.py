@@ -1177,6 +1177,21 @@ async def get_retailer_analytics(current_user: User = Depends(get_current_user))
 # Include KYC router
 api_router.include_router(kyc_router)
 
+# ==================== WEBSOCKET ENDPOINTS ====================
+
+@app.websocket("/ws/tracking/{order_id}")
+async def websocket_tracking(websocket: WebSocket, order_id: str):
+    """WebSocket endpoint for real-time delivery tracking"""
+    await delivery_tracker.connect(websocket, order_id)
+    try:
+        while True:
+            # Keep connection alive and handle any client messages
+            data = await websocket.receive_text()
+            if data == "ping":
+                await websocket.send_json({"type": "pong"})
+    except WebSocketDisconnect:
+        delivery_tracker.disconnect(websocket, order_id)
+
 # Include router
 app.include_router(api_router)
 
