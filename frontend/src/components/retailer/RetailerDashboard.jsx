@@ -141,7 +141,7 @@ export const RetailerDashboard = () => {
           )}
           {activeTab === 'profile' && (
             <PageTransition key="profile">
-              <ProfileTab user={user} onLogout={logout} onShowKYC={() => setShowKYC(true)} />
+              <ProfileTab user={user} onLogout={logout} onShowKYC={() => setShowKYC(true)} onNavigate={setProfilePage} />
             </PageTransition>
           )}
         </AnimatePresence>
