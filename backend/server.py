@@ -390,6 +390,10 @@ async def get_pending_retailers(current_user: User = Depends(get_current_user)):
         raise HTTPException(status_code=403, detail="Not authorized")
     
     retailers = await db.retailers.find({"status": RetailerStatus.PENDING}).to_list(100)
+    # Remove MongoDB _id field for JSON serialization
+    for retailer in retailers:
+        if "_id" in retailer:
+            del retailer["_id"]
     return retailers
 
 @api_router.post("/retailers/approve")
