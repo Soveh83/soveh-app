@@ -552,6 +552,9 @@ async def get_order(order_id: str, current_user: User = Depends(get_current_user
     if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN] and order["user_id"] != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized")
     
+    # Remove MongoDB _id field for JSON serialization
+    if "_id" in order:
+        del order["_id"]
     return order
 
 @api_router.patch("/orders/{order_id}/status")
