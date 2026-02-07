@@ -8,97 +8,97 @@
       "test": "Root Endpoint",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.607936"
+      "timestamp": "2026-02-07T14:57:07.075742"
     },
     {
       "test": "Health Check",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.643145"
+      "timestamp": "2026-02-07T14:57:07.113153"
     },
     {
       "test": "Send OTP",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.680025"
+      "timestamp": "2026-02-07T14:57:07.153358"
     },
     {
-      "test": "Verify OTP (710062)",
+      "test": "Verify OTP (260066)",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.716414"
+      "timestamp": "2026-02-07T14:57:07.195472"
     },
     {
       "test": "Get Categories",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.754608"
+      "timestamp": "2026-02-07T14:57:07.230281"
     },
     {
       "test": "Get All Products",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.790618"
+      "timestamp": "2026-02-07T14:57:07.267287"
     },
     {
       "test": "Get Products by Category",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.827764"
+      "timestamp": "2026-02-07T14:57:07.301969"
     },
     {
       "test": "Get Specific Product",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.867207"
+      "timestamp": "2026-02-07T14:57:07.338259"
     },
     {
       "test": "Get User Orders",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.904026"
+      "timestamp": "2026-02-07T14:57:07.376036"
     },
     {
       "test": "Create Order",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:25.942697"
+      "timestamp": "2026-02-07T14:57:07.413603"
     },
     {
       "test": "Get Specific Order",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:26.016914"
+      "timestamp": "2026-02-07T14:57:07.453920"
     },
     {
       "test": "Admin Dashboard",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-07T14:11:26.052119"
+      "timestamp": "2026-02-07T14:57:07.489021"
     },
     {
       "test": "Get All Users",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-07T14:11:26.086804"
+      "timestamp": "2026-02-07T14:57:07.523691"
     },
     {
       "test": "Get Pending Retailers",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-07T14:11:26.123854"
+      "timestamp": "2026-02-07T14:57:07.558880"
     },
     {
       "test": "Get Credit Balance",
       "success": false,
       "details": "Status: 404, Response: {'detail': 'Retailer not found'}",
-      "timestamp": "2026-02-07T14:11:26.157696"
+      "timestamp": "2026-02-07T14:57:07.596570"
     },
     {
       "test": "Get Credit Ledger",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:11:26.190838"
+      "timestamp": "2026-02-07T14:57:07.632366"
     }
   ]
 }
