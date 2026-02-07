@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { Button, Card, Badge, Input, Spinner, Modal } from '../ui';
 import { useAuthStore } from '../../store/authStore';
-import { creditAPI } from '../../lib/api';
+import { creditAPI, profileAPI, addressAPI, analyticsAPI } from '../../lib/api';
 import toast from 'react-hot-toast';
 
 const libraries = ['places'];
@@ -20,23 +20,28 @@ export const EditProfile = ({ user, onBack, onSave }) => {
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
-    shopName: user?.shop_name || '',
+    shop_name: user?.shop_name || '',
     gst: user?.gst || '',
-    businessType: user?.business_type || 'retail'
+    business_type: user?.business_type || 'retail'
   });
   const [loading, setLoading] = useState(false);
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState(user?.avatar || null);
 
   const handleSave = async () => {
     setLoading(true);
     try {
-      // API call would go here
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      toast.success('Profile updated successfully!');
-      onSave?.(formData);
-      onBack();
+      const res = await profileAPI.update({
+        ...formData,
+        avatar
+      });
+      if (res.data.success) {
+        toast.success('Profile updated successfully!');
+        onSave?.(res.data.user);
+        onBack();
+      }
     } catch (error) {
       toast.error('Failed to update profile');
+      console.error(error);
     } finally {
       setLoading(false);
     }
