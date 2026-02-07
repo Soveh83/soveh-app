@@ -379,6 +379,9 @@ async def get_retailer_profile(current_user: User = Depends(get_current_user)):
     retailer = await db.retailers.find_one({"user_id": current_user.id})
     if not retailer:
         raise HTTPException(status_code=404, detail="Retailer profile not found")
+    # Remove MongoDB _id field for JSON serialization
+    if "_id" in retailer:
+        del retailer["_id"]
     return retailer
 
 @api_router.get("/retailers/pending")
