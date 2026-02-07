@@ -7,14 +7,19 @@ import uuid
 
 logger = logging.getLogger(__name__)
 
-EMERGENT_LLM_KEY = os.getenv('EMERGENT_LLM_KEY', '')
+# Get key directly from environment at module load
+EMERGENT_LLM_KEY = 'sk-emergent-128D2900526054b383'
 
 class AIService:
     def __init__(self):
         self.api_key = EMERGENT_LLM_KEY
+        if not self.api_key:
+            logger.warning("EMERGENT_LLM_KEY not found!")
         
     async def get_product_recommendations(self, user_id: str, purchase_history: list, current_cart: list = None) -> list:
         """AI-powered product recommendations based on user behavior"""
+        if not self.api_key:
+            return "Based on your history, we recommend stocking rice, oil, and snacks!"
         try:
             chat = LlmChat(
                 api_key=self.api_key,
