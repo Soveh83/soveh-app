@@ -1,96 +1,39 @@
-# SREYANIMTI - Enterprise B2B Retail Supply Network
+# SOVEH - Enterprise B2B Retail Supply Network v2.0
 
-## Project Overview
-**Version:** 2.0 (Enterprise Edition)
-**Date:** February 7, 2026
-**Status:** MVP Complete with Advanced Features
+## Brand Info
+**Name:** SOVEH
+**Logo:** Custom branded logo
+**Tagline:** Retail Supply Network
 
----
+## Latest Updates (Feb 7, 2026)
 
-## What's Implemented
+### Fixed Issues
+- ✅ AI Recommendations now working with GPT-4o
+- ✅ Shop tab fully functional with category navigation
+- ✅ All Account section inner pages working
 
-### Core Features
-- ✅ Phone-based OTP Authentication (4 roles: Retailer, Customer, Delivery, Admin)
-- ✅ Product Catalog with real images (10+ products, 4 categories)
-- ✅ Shopping Cart with GST calculation
-- ✅ Order Management System
-- ✅ Credit System with ledger
-
-### Advanced AI Features (GPT-4o Powered)
-- ✅ AI Product Recommendations - personalized suggestions
-- ✅ AI Chatbot - customer support assistant
-- ✅ AI-Powered KYC Verification - document analysis
-
-### Profile/Account Pages (All Working)
-- ✅ Edit Profile - name, email, business info, avatar upload
-- ✅ Manage Addresses - Google Maps integration, autocomplete, map markers
-- ✅ Credit Details - credit card UI, transaction history, credit score
-- ✅ Shop Analytics - revenue charts, order metrics, top products
+### New Features
+- ✅ Glass morphism bottom navigation bar
+- ✅ Auto-fetch current location with Google Maps reverse geocoding
+- ✅ Order tracking with real-time progress bar (like Zomato/Swiggy)
+- ✅ Order actions: Cancel, Refund request, Customer support
+- ✅ Enhanced Account section with organized menu groups
+- ✅ Premium hero banner with deals
+- ✅ Quick stats dashboard (Monthly revenue, orders, savings, points)
 
 ### UI/UX Enhancements
-- ✅ Framer Motion animations throughout
-- ✅ Page transitions and micro-interactions
-- ✅ Skeleton loading states
-- ✅ Modern card designs with hover effects
-- ✅ Gradient backgrounds and glass morphism
-- ✅ Role-based color theming
-
-### Integrations
-- ✅ Google Maps API - address management with autocomplete
-- ✅ OpenAI GPT-4o - AI features via Emergent LLM Key
-- ✅ MongoDB - data persistence
-- ✅ Push Notifications - backend ready
-
----
+- Glass blur effects on header and bottom nav
+- Smooth page transitions with Framer Motion
+- Gradient cards and backgrounds
+- Animated progress indicators
+- Skeleton loading states
+- Hover animations on all interactive elements
 
 ## Tech Stack
-- **Frontend:** React 18, Tailwind CSS, Framer Motion, Recharts, Zustand
-- **Backend:** FastAPI, MongoDB, emergentintegrations
-- **AI:** GPT-4o via Emergent LLM Key
-- **Maps:** @react-google-maps/api
-
----
+- React 18 + Tailwind CSS + Framer Motion
+- FastAPI + MongoDB
+- GPT-4o via Emergent LLM Key
+- Google Maps API for location services
 
 ## Test Credentials
-| Role | Phone |
-|------|-------|
-| Retailer | 9999999999 |
-| Customer | 1111111111 |
-| Admin | 3333333333 |
-
----
-
-## API Endpoints
-
-### Auth
-- POST /api/auth/send-otp
-- POST /api/auth/verify-otp
-
-### AI
-- POST /api/ai/recommendations
-- POST /api/ai/search
-- POST /api/ai/chat
-
-### KYC
-- POST /api/kyc/upload
-- GET /api/kyc/status/{user_id}
-
-### Products/Orders/Credit
-- GET/POST /api/products
-- GET/POST /api/orders
-- GET /api/credit/balance
-
----
-
-## Next Steps (P0)
-1. Payment gateway (Razorpay live mode)
-2. Real SMS OTP (Twilio)
-3. Push notifications (Firebase)
-4. Invoice PDF generation
-
-## Backlog (P1-P2)
-- Multi-language support
-- Dark mode
-- Delivery tracking with real-time map
-- EMI options
-- Loyalty rewards program
+Phone: 9999999999 (Retailer)
