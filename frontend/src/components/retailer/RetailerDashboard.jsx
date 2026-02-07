@@ -280,30 +280,24 @@ const HomeTab = ({ currentLocation }) => {
   const loadRecommendations = async () => {
     try {
       const res = await aiAPI.getRecommendations(cart.items);
-      if (res.data.success && res.data.recommendations) {
-        const recs = res.data.recommendations;
-        // Parse AI response properly
+      if (res.data.success) {
+        const { recommendations, summary } = res.data;
+        
+        // Format recommendations for display
         let formattedRecs = '';
-        if (typeof recs === 'string') {
-          // Try to parse JSON from string
-          try {
-            const parsed = JSON.parse(recs.replace(/```json|```/g, '').trim());
-            if (Array.isArray(parsed)) {
-              formattedRecs = parsed.slice(0, 3).map(r => `• ${r.product_name}: ${r.reason}`).join('\n');
-            } else {
-              formattedRecs = recs;
-            }
-          } catch {
-            formattedRecs = recs.replace(/```json|```|\[|\]|\{|\}/g, '').trim();
-          }
-        } else if (Array.isArray(recs)) {
-          formattedRecs = recs.slice(0, 3).map(r => `• ${r.product_name}: ${r.reason}`).join('\n');
+        if (Array.isArray(recommendations) && recommendations.length > 0) {
+          formattedRecs = recommendations.slice(0, 3).map(r => 
+            `• ${r.product_name}: ${r.reason}`
+          ).join('\n');
+        } else if (summary) {
+          formattedRecs = summary;
         } else {
           formattedRecs = 'Stock up on cooking essentials like oil, rice, and snacks for maximum profit margins!';
         }
-        setRecommendations(formattedRecs || 'Based on trends, consider stocking more beverages and snacks this week!');
+        setRecommendations(formattedRecs);
       }
     } catch (e) {
+      console.error('Recommendations error:', e);
       setRecommendations('Based on your purchase patterns, stock up on cooking oil, rice, and daily essentials for maximum margin!');
     } finally {
       setLoadingRecs(false);
