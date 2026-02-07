@@ -712,15 +712,33 @@ async def get_ai_recommendations(request: AIRecommendationRequest, current_user:
             for item in order.get("items", []):
                 purchase_history.append({"name": item.get("product_name")})
         
-        recommendations = await ai_service.get_product_recommendations(
+        result = await ai_service.get_product_recommendations(
             current_user.id,
             purchase_history,
             request.cart_items
         )
         
-        return {"success": True, "recommendations": recommendations}
+        # Ensure we return a properly structured response
+        if isinstance(result, dict):
+            return {
+                "success": True, 
+                "recommendations": result.get("recommendations", []),
+                "summary": result.get("summary", "")
+            }
+        else:
+            return {
+                "success": True, 
+                "recommendations": [],
+                "summary": str(result) if result else ""
+            }
     except Exception as e:
-        return {"success": False, "error": str(e), "recommendations": []}
+        logging.error(f"AI recommendations error: {str(e)}")
+        return {
+            "success": False, 
+            "error": str(e), 
+            "recommendations": [],
+            "summary": "Unable to load recommendations"
+        }
 
 @api_router.post("/ai/search")
 async def ai_smart_search(request: AISearchRequest):

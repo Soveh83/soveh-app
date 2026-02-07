@@ -16,18 +16,31 @@ class AIService:
         if not self.api_key:
             logger.warning("EMERGENT_LLM_KEY not found!")
         
-    async def get_product_recommendations(self, user_id: str, purchase_history: list, current_cart: list = None) -> list:
+    async def get_product_recommendations(self, user_id: str, purchase_history: list, current_cart: list = None) -> dict:
         """AI-powered product recommendations based on user behavior"""
         if not self.api_key:
-            return "Based on your history, we recommend stocking rice, oil, and snacks!"
+            return {
+                "recommendations": [
+                    {"product_name": "Cooking Oil", "reason": "Essential daily item with good margins", "priority": 1},
+                    {"product_name": "Basmati Rice", "reason": "High demand staple food", "priority": 2},
+                    {"product_name": "Snacks & Chips", "reason": "Fast-moving consumer goods", "priority": 3}
+                ],
+                "summary": "Based on your history, we recommend stocking rice, oil, and snacks!"
+            }
         try:
             chat = LlmChat(
                 api_key=self.api_key,
                 session_id=f"recommendations-{user_id}-{uuid.uuid4().hex[:8]}",
                 system_message="""You are an AI product recommendation engine for a B2B retail supply app.
                 Analyze purchase history and suggest relevant products.
-                Return ONLY a JSON array of product recommendations with fields: product_name, reason, priority (1-5).
-                Be concise and practical for Indian retail shops."""
+                Return ONLY a valid JSON object with this exact structure:
+                {
+                    "recommendations": [
+                        {"product_name": "Product Name", "reason": "Brief reason", "priority": 1}
+                    ],
+                    "summary": "A brief 1-2 sentence summary of recommendations"
+                }
+                Be concise and practical for Indian retail shops. Maximum 5 recommendations."""
             ).with_model("openai", "gpt-4o-mini")
             
             history_text = ", ".join([p.get('name', '') for p in purchase_history[-10:]]) if purchase_history else "No history"
@@ -39,13 +52,46 @@ class AIService:
 Purchase History: {history_text}
 Current Cart: {cart_text}
 
-Return JSON array only."""
+Return a valid JSON object with "recommendations" array and "summary" string."""
             ))
             
-            return response
+            # Parse the response to ensure it's valid JSON
+            import json
+            try:
+                # Clean the response - remove markdown code blocks if present
+                clean_response = response.strip()
+                if clean_response.startswith("```"):
+                    clean_response = clean_response.split("```")[1]
+                    if clean_response.startswith("json"):
+                        clean_response = clean_response[4:]
+                clean_response = clean_response.strip()
+                
+                parsed = json.loads(clean_response)
+                if isinstance(parsed, dict) and "recommendations" in parsed:
+                    return parsed
+                elif isinstance(parsed, list):
+                    return {
+                        "recommendations": parsed[:5],
+                        "summary": f"Here are {len(parsed[:5])} product recommendations based on your purchase patterns."
+                    }
+            except json.JSONDecodeError:
+                pass
+            
+            # Fallback response
+            return {
+                "recommendations": [
+                    {"product_name": "Cooking Oil", "reason": "Essential daily item with good margins", "priority": 1},
+                    {"product_name": "Rice", "reason": "High demand staple food", "priority": 2},
+                    {"product_name": "Snacks", "reason": "Fast-moving consumer goods", "priority": 3}
+                ],
+                "summary": response[:200] if response else "Stock up on daily essentials for maximum profit!"
+            }
         except Exception as e:
             logger.error(f"AI recommendation error: {str(e)}")
-            return []
+            return {
+                "recommendations": [],
+                "summary": "Unable to generate recommendations at this time."
+            }
     
     async def smart_search(self, query: str, products: list) -> dict:
         """AI-powered natural language search"""
