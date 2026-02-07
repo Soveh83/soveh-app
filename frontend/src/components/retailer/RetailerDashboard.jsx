@@ -191,20 +191,27 @@ export const RetailerDashboard = () => {
       {/* AI Chatbot */}
       <AIChatbot />
 
-      {/* Glass Bottom Navigation */}
+      {/* iOS 26-style Glass Bottom Navigation */}
       <motion.nav 
         initial={{ y: 100 }}
         animate={{ y: 0 }}
-        className="fixed bottom-0 left-0 right-0 glass-nav z-50"
+        className="fixed bottom-0 left-0 right-0 z-50"
+        style={{
+          background: 'linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.85))',
+          backdropFilter: 'blur(40px) saturate(200%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(200%)',
+          borderTop: '1px solid rgba(255,255,255,0.6)',
+          boxShadow: '0 -10px 40px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9)'
+        }}
       >
-        <div className="flex justify-around items-center py-2 px-4 max-w-lg mx-auto">
+        <div className="flex justify-around items-center py-1.5 px-3 max-w-lg mx-auto">
           {tabs.map((tab) => (
             <motion.button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.85 }}
               data-testid={`nav-${tab.id}`}
-              className={`relative flex flex-col items-center py-2 px-4 rounded-2xl transition-all ${
+              className={`relative flex flex-col items-center py-2 px-5 rounded-3xl transition-all duration-300 ${
                 activeTab === tab.id 
                   ? 'text-blue-600' 
                   : 'text-slate-400 hover:text-slate-600'
@@ -213,24 +220,33 @@ export const RetailerDashboard = () => {
               {activeTab === tab.id && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 bg-blue-50 rounded-2xl"
-                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  className="absolute inset-0 rounded-3xl"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1))',
+                    border: '1px solid rgba(59,130,246,0.2)',
+                    boxShadow: '0 4px 15px rgba(59,130,246,0.15), inset 0 1px 0 rgba(255,255,255,0.5)'
+                  }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
               <motion.div
-                animate={activeTab === tab.id ? { y: -2 } : { y: 0 }}
+                animate={activeTab === tab.id ? { y: -2, scale: 1.1 } : { y: 0, scale: 1 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 className="relative z-10"
               >
-                <tab.icon className="w-6 h-6" strokeWidth={activeTab === tab.id ? 2.5 : 2} />
+                <tab.icon className="w-6 h-6" strokeWidth={activeTab === tab.id ? 2.5 : 1.8} />
               </motion.div>
-              <span className={`relative z-10 text-xs mt-1 font-medium ${activeTab === tab.id ? 'text-blue-600' : ''}`}>
+              <motion.span 
+                animate={activeTab === tab.id ? { opacity: 1, y: 0 } : { opacity: 0.8, y: 0 }}
+                className={`relative z-10 text-[10px] mt-0.5 font-semibold tracking-wide ${activeTab === tab.id ? 'text-blue-600' : ''}`}
+              >
                 {tab.label}
-              </span>
+              </motion.span>
               {tab.id === 'cart' && cart.getItemCount() > 0 && (
                 <motion.span 
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1 right-2 min-w-[20px] h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center px-1 z-20"
+                  className="absolute -top-0.5 right-1 min-w-[18px] h-[18px] bg-gradient-to-r from-red-500 to-rose-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 z-20 shadow-lg shadow-red-500/30"
                 >
                   {cart.getItemCount()}
                 </motion.span>
@@ -238,6 +254,8 @@ export const RetailerDashboard = () => {
             </motion.button>
           ))}
         </div>
+        {/* Safe area padding for iOS */}
+        <div className="h-[env(safe-area-inset-bottom)]" style={{ background: 'inherit' }} />
       </motion.nav>
 
       {/* KYC Modal */}
