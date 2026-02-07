@@ -684,11 +684,125 @@ async def get_tickets(current_user: User = Depends(get_current_user)):
 
 @api_router.get("/")
 async def root():
-    return {"message": "SOVEH API v1.0", "status": "running"}
+    return {"message": "SREYANIMTI API v2.0", "status": "running", "ai_enabled": True}
 
 @api_router.get("/health")
 async def health_check():
-    return {"status": "healthy", "timestamp": datetime.utcnow()}
+    return {"status": "healthy", "timestamp": datetime.utcnow(), "ai_service": "active"}
+
+# ==================== AI ENDPOINTS ====================
+
+class AIRecommendationRequest(BaseModel):
+    cart_items: Optional[List[Dict]] = []
+
+class AISearchRequest(BaseModel):
+    query: str
+
+class AIChatRequest(BaseModel):
+    message: str
+
+@api_router.post("/ai/recommendations")
+async def get_ai_recommendations(request: AIRecommendationRequest, current_user: User = Depends(get_current_user)):
+    """Get AI-powered product recommendations"""
+    try:
+        # Get user's purchase history
+        orders = await db.orders.find({"user_id": current_user.id}).to_list(20)
+        purchase_history = []
+        for order in orders:
+            for item in order.get("items", []):
+                purchase_history.append({"name": item.get("product_name")})
+        
+        recommendations = await ai_service.get_product_recommendations(
+            current_user.id,
+            purchase_history,
+            request.cart_items
+        )
+        
+        return {"success": True, "recommendations": recommendations}
+    except Exception as e:
+        return {"success": False, "error": str(e), "recommendations": []}
+
+@api_router.post("/ai/search")
+async def ai_smart_search(request: AISearchRequest):
+    """AI-powered smart search"""
+    try:
+        products = await db.products.find({"is_active": True}).to_list(100)
+        for p in products:
+            if "_id" in p:
+                del p["_id"]
+        
+        result = await ai_service.smart_search(request.query, products)
+        return {"success": True, "result": result}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+@api_router.post("/ai/chat")
+async def ai_chatbot(request: AIChatRequest, current_user: User = Depends(get_current_user)):
+    """AI chatbot for customer support"""
+    try:
+        # Get user context
+        order_count = await db.orders.count_documents({"user_id": current_user.id})
+        
+        user_context = {
+            "user_id": current_user.id,
+            "name": current_user.name or "User",
+            "role": current_user.role,
+            "recent_orders": order_count
+        }
+        
+        response = await ai_service.chatbot_response(request.message, user_context)
+        return {"success": True, "response": response}
+    except Exception as e:
+        return {"success": False, "response": "Sorry, I'm having trouble. Please try again.", "error": str(e)}
+
+# ==================== NOTIFICATION ENDPOINTS ====================
+
+class NotificationToken(BaseModel):
+    token: str
+    device_type: str = "web"  # web, android, ios
+
+@api_router.post("/notifications/register")
+async def register_notification_token(token_data: NotificationToken, current_user: User = Depends(get_current_user)):
+    """Register device for push notifications"""
+    try:
+        await db.notification_tokens.update_one(
+            {"user_id": current_user.id, "device_type": token_data.device_type},
+            {"$set": {
+                "user_id": current_user.id,
+                "token": token_data.token,
+                "device_type": token_data.device_type,
+                "updated_at": datetime.utcnow().isoformat()
+            }},
+            upsert=True
+        )
+        return {"success": True, "message": "Notification token registered"}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+@api_router.get("/notifications")
+async def get_notifications(current_user: User = Depends(get_current_user)):
+    """Get user notifications"""
+    notifications = await db.notifications.find(
+        {"user_id": current_user.id}
+    ).sort("created_at", -1).to_list(50)
+    
+    for n in notifications:
+        if "_id" in n:
+            del n["_id"]
+    
+    return notifications
+
+@api_router.post("/notifications/mark-read")
+async def mark_notifications_read(notification_ids: List[str], current_user: User = Depends(get_current_user)):
+    """Mark notifications as read"""
+    await db.notifications.update_many(
+        {"id": {"$in": notification_ids}, "user_id": current_user.id},
+        {"$set": {"read": True}}
+    )
+    return {"success": True}
+
+# Include KYC router
+api_router.include_router(kyc_router)
 
 # Include router
 app.include_router(api_router)
