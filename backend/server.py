@@ -536,6 +536,10 @@ async def get_orders(current_user: User = Depends(get_current_user), status: Opt
         query["order_status"] = status
     
     orders = await db.orders.find(query).sort("created_at", -1).to_list(100)
+    # Remove MongoDB _id field for JSON serialization
+    for order in orders:
+        if "_id" in order:
+            del order["_id"]
     return orders
 
 @api_router.get("/orders/{order_id}")
