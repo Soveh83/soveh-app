@@ -176,10 +176,8 @@ export const EditProfile = ({ user, onBack, onSave }) => {
 
 // Manage Addresses Component with Google Maps
 export const ManageAddresses = ({ onBack }) => {
-  const [addresses, setAddresses] = useState([
-    { id: '1', type: 'shop', name: 'My Shop', address: '123 Market Street, Mumbai', pincode: '400001', isDefault: true, lat: 19.076, lng: 72.8777 },
-    { id: '2', type: 'warehouse', name: 'Warehouse', address: '456 Industrial Area, Thane', pincode: '400601', isDefault: false, lat: 19.2183, lng: 72.9781 }
-  ]);
+  const [addresses, setAddresses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState({ lat: 19.076, lng: 72.8777 });
@@ -191,6 +189,25 @@ export const ManageAddresses = ({ onBack }) => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY || '',
     libraries
   });
+
+  useEffect(() => {
+    loadAddresses();
+  }, []);
+
+  const loadAddresses = async () => {
+    try {
+      const res = await addressAPI.getAll();
+      setAddresses(res.data || []);
+    } catch (error) {
+      console.error('Failed to load addresses:', error);
+      // Set default mock data if API fails
+      setAddresses([
+        { id: '1', type: 'shop', name: 'My Shop', address: '123 Market Street, Mumbai', pincode: '400001', is_default: true, lat: 19.076, lng: 72.8777 }
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const onLoad = useCallback((autocompleteInstance) => {
     setAutocomplete(autocompleteInstance);
@@ -220,33 +237,56 @@ export const ManageAddresses = ({ onBack }) => {
     setNewAddress({ ...newAddress, lat, lng });
   };
 
-  const handleSaveAddress = () => {
+  const handleSaveAddress = async () => {
     if (!newAddress.name || !newAddress.address) {
       toast.error('Please fill all required fields');
       return;
     }
 
-    if (editingAddress) {
-      setAddresses(addresses.map(a => a.id === editingAddress.id ? { ...newAddress, id: a.id } : a));
-      toast.success('Address updated!');
-    } else {
-      setAddresses([...addresses, { ...newAddress, id: Date.now().toString(), isDefault: false }]);
-      toast.success('Address added!');
+    try {
+      if (editingAddress) {
+        await addressAPI.update(editingAddress.id, newAddress);
+        toast.success('Address updated!');
+      } else {
+        await addressAPI.add(newAddress);
+        toast.success('Address added!');
+      }
+      loadAddresses();
+      setShowAddModal(false);
+      setEditingAddress(null);
+      setNewAddress({ type: 'shop', name: '', address: '', pincode: '', lat: 19.076, lng: 72.8777 });
+    } catch (error) {
+      toast.error('Failed to save address');
     }
-    setShowAddModal(false);
-    setEditingAddress(null);
-    setNewAddress({ type: 'shop', name: '', address: '', pincode: '', lat: 19.076, lng: 72.8777 });
   };
 
-  const handleDelete = (id) => {
-    setAddresses(addresses.filter(a => a.id !== id));
-    toast.success('Address deleted');
+  const handleDelete = async (id) => {
+    try {
+      await addressAPI.delete(id);
+      toast.success('Address deleted');
+      loadAddresses();
+    } catch (error) {
+      toast.error('Failed to delete address');
+    }
   };
 
-  const handleSetDefault = (id) => {
-    setAddresses(addresses.map(a => ({ ...a, isDefault: a.id === id })));
-    toast.success('Default address updated');
+  const handleSetDefault = async (id) => {
+    try {
+      await addressAPI.setDefault(id);
+      toast.success('Default address updated');
+      loadAddresses();
+    } catch (error) {
+      toast.error('Failed to update default');
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <motion.div
