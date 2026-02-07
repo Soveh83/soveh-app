@@ -463,6 +463,40 @@ async def get_product(product_id: str):
         del product["_id"]
     return product
 
+@api_router.put("/products/{product_id}")
+async def update_product(product_id: str, product_data: dict, current_user: User = Depends(get_current_user)):
+    """Update a product (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Remove fields that shouldn't be updated
+    product_data.pop('id', None)
+    product_data.pop('_id', None)
+    product_data['updated_at'] = datetime.utcnow()
+    
+    result = await db.products.update_one(
+        {"id": product_id},
+        {"$set": product_data}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    return {"success": True, "message": "Product updated"}
+
+@api_router.delete("/products/{product_id}")
+async def delete_product(product_id: str, current_user: User = Depends(get_current_user)):
+    """Delete a product (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    result = await db.products.delete_one({"id": product_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Product not found")
+    
+    return {"success": True, "message": "Product deleted"}
+
 # ==================== CATEGORY ENDPOINTS ====================
 
 @api_router.post("/categories")
