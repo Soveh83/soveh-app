@@ -95,11 +95,15 @@ export const AuthScreen = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 200 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white text-2xl font-bold mb-4 shadow-lg"
+            className="inline-block mb-4"
           >
-            S
+            <img 
+              src="https://customer-assets.emergentagent.com/job_hii-wave-2/artifacts/fg5ubket_WhatsApp%20Image%202026-02-07%20at%209.05.20%20PM.jpeg"
+              alt="SOVEH"
+              className="w-20 h-20 rounded-2xl shadow-lg mx-auto"
+            />
           </motion.div>
-          <h1 className="text-2xl font-bold text-slate-900">SREYANIMTI</h1>
+          <h1 className="text-2xl font-bold text-slate-900">SOVEH</h1>
           <p className="text-slate-500 mt-1">Retail Supply Network</p>
         </div>
 
