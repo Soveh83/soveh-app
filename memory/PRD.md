@@ -13,7 +13,7 @@ SOVEH is a comprehensive B2B retail supply network application connecting retail
 |------|-------------|--------|
 | **Retailer** | Shop owners & wholesalers | Browse products, place orders, track deliveries, view AI recommendations |
 | **Delivery Agent** | Delivery partners | View assignments, update delivery status, GPS tracking |
-| **Admin** | Operations team (Employee code required) | Full system access - products, orders, retailers, delivery agents |
+| **Admin** | Operations team (Employee code required) | Full system access - products, orders, retailers, delivery agents, employees |
 
 *Note: Customer role has been removed - focus is on B2B operations*
 
@@ -44,6 +44,7 @@ SOVEH is a comprehensive B2B retail supply network application connecting retail
 - [x] Order status progress visualization
 - [x] Live GPS delivery tracking (WebSocket)
 - [x] iOS 26-style glassmorphism navigation
+- [x] **Auto-fetch current location on load**
 - [x] AI chatbot for support
 
 ### Profile & Settings
@@ -52,34 +53,67 @@ SOVEH is a comprehensive B2B retail supply network application connecting retail
 - [x] Credit Details view
 - [x] Shop Analytics dashboard
 
+### KYC Verification (Updated)
+**Mandatory Documents:**
+- [x] Shop Photo
+- [x] Owner Live Photo (Camera capture)
+- [x] Aadhaar Card
+
+**Optional Documents:**
+- [x] PAN Card
+- [x] Trade License
+
 ### Admin Portal
 - [x] Employee code authentication (SOVEH001, SOVEH002, ADMIN123, SUPER001)
 - [x] Dashboard with stats and charts
-- [x] Product management (Add/Edit/Delete)
+- [x] **Product management (Add/Edit/Delete) - FULLY FUNCTIONAL**
 - [x] Category management
 - [x] Order management with status updates
 - [x] Delivery agent assignment
 - [x] Retailer approval workflow
+- [x] **Employee Management (Add/Block/Unblock/Remove)**
 - [x] Analytics overview
 
-### APIs Implemented
+---
+
+## API Endpoints
+
+### Authentication
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/auth/send-otp` | POST | Send OTP |
 | `/api/auth/verify-otp` | POST | Verify & login |
+
+### Profile & Address
+| Endpoint | Method | Description |
+|----------|--------|-------------|
 | `/api/profile` | GET/PUT | User profile |
 | `/api/addresses` | GET/POST/PUT/DELETE | Address CRUD |
 | `/api/addresses/{id}/set-default` | POST | Set default address |
-| `/api/products` | GET/POST | Products |
-| `/api/categories` | GET/POST | Categories |
-| `/api/orders` | GET/POST | Orders |
+
+### Products
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/products` | GET | List products |
+| `/api/products` | POST | Create product (admin) |
+| `/api/products/{id}` | PUT | **Update product (admin)** |
+| `/api/products/{id}` | DELETE | **Delete product (admin)** |
+
+### Orders
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/orders` | GET/POST | Orders CRUD |
 | `/api/orders/{id}/status` | PATCH | Update order status |
 | `/api/orders/{id}/assign-agent` | POST | Assign delivery agent |
+
+### Other
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/categories` | GET/POST | Categories |
 | `/api/ai/recommendations` | POST | AI recommendations |
 | `/api/ai/chat` | POST | AI chatbot |
 | `/api/analytics/retailer` | GET | Shop analytics |
 | `/api/refunds/request` | POST | Request refund |
-| `/api/refunds` | GET | List refunds |
 | `/api/delivery-agents` | GET/POST | Delivery agents |
 | `/ws/tracking/{order_id}` | WebSocket | Live tracking |
 
@@ -109,23 +143,7 @@ OTP: Displayed on screen after sending (Test OTP: XXXXXX)
   "gst": "string",
   "business_type": "retail|wholesale|distributor|manufacturer",
   "is_active": true,
-  "token": "string",
-  "created_at": "datetime"
-}
-```
-
-### addresses
-```json
-{
-  "id": "uuid",
-  "user_id": "uuid",
-  "type": "shop|warehouse|home",
-  "name": "string",
-  "address": "string",
-  "pincode": "string",
-  "lat": "float",
-  "lng": "float",
-  "is_default": true
+  "token": "string"
 }
 ```
 
@@ -139,6 +157,7 @@ OTP: Displayed on screen after sending (Test OTP: XXXXXX)
   "mrp": "float",
   "retailer_price": "float",
   "customer_price": "float",
+  "margin_percent": "float",
   "stock_quantity": "int",
   "images": ["url"]
 }
@@ -153,43 +172,35 @@ OTP: Displayed on screen after sending (Test OTP: XXXXXX)
   "items": [{"product_id", "quantity", "price"}],
   "total_amount": "float",
   "order_status": "placed|confirmed|packed|out_for_delivery|delivered|cancelled",
-  "delivery_address": {},
   "assigned_delivery_agent": "uuid"
 }
 ```
 
 ---
 
-## Deployment Notes
+## Recent Fixes (February 7, 2026)
 
-### Environment Variables Required
-**Backend (.env):**
-- `MONGO_URL` - MongoDB connection string
-- `EMERGENT_LLM_KEY` - AI API key
-
-**Frontend (.env):**
-- `REACT_APP_BACKEND_URL` - Backend API URL
-- `REACT_APP_GOOGLE_MAPS_KEY` - Google Maps API key
-
-### Notes for Production
-1. WebSocket delivery tracking uses simulation mode if real GPS data unavailable
-2. Admin portal requires employee code verification before access
-3. OTP is shown in response for testing (remove in production)
-4. Delivery agents in admin panel use mock data (connect to real delivery app for production)
+1. **Admin Edit Products** - Now fully functional with modal showing pre-filled product data
+2. **Admin Delete Products** - Working with confirmation dialog
+3. **Employee Management** - New tab with Add/Block/Unblock/Remove functionality
+4. **Auto Location** - Improved geolocation with better error handling and toast notifications
+5. **KYC Documents** - Updated requirements:
+   - Mandatory: Shop Photo, Owner Live Photo, Aadhaar Card
+   - Optional: PAN Card, Trade License
 
 ---
 
 ## Known Limitations (SIMULATED)
-- **Live GPS Tracking:** WebSocket provides simulated movement; real implementation needs a delivery partner mobile app
-- **Push Notifications:** Service worker created but not fully integrated with backend events
-- **Delivery Agents:** Admin panel shows mock agents; real agents need to be added through the delivery partner app
+- **Live GPS Tracking:** WebSocket provides simulated movement
+- **Push Notifications:** Service created but not fully integrated
+- **Delivery Agents:** Admin panel shows mock agents
 
 ---
 
 ## Future Enhancements (Backlog)
 - [ ] Real delivery partner mobile app for GPS tracking
 - [ ] Push notification triggers from backend events
-- [ ] Payment gateway integration (Razorpay configured but inactive)
+- [ ] Payment gateway integration (Razorpay configured)
 - [ ] Invoice generation and download
 - [ ] Multi-language support
 - [ ] Dark mode theme
