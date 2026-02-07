@@ -425,6 +425,9 @@ async def create_product(product: Product, current_user: User = Depends(get_curr
     
     product_dict = product.dict()
     await db.products.insert_one(product_dict)
+    # Remove MongoDB _id field for JSON serialization
+    if "_id" in product_dict:
+        del product_dict["_id"]
     return {"success": True, "product": product_dict}
 
 @api_router.get("/products")
