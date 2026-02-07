@@ -636,29 +636,53 @@ export const CreditDetails = ({ onBack }) => {
 // Shop Analytics Component
 export const ShopAnalytics = ({ onBack }) => {
   const [timeRange, setTimeRange] = useState('week');
-  const [loading, setLoading] = useState(false);
-
-  const stats = {
-    totalOrders: 156,
-    totalRevenue: 245000,
-    avgOrderValue: 1571,
-    topProducts: [
-      { name: 'Fortune Oil 1L', quantity: 45, revenue: 7125 },
-      { name: 'Tata Salt 1kg', quantity: 120, revenue: 2880 },
-      { name: 'Coca Cola 2L', quantity: 38, revenue: 3610 }
-    ],
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    totalRevenue: 0,
+    avgOrderValue: 0,
+    topProducts: [],
     weeklyData: [
-      { day: 'Mon', orders: 12, revenue: 18500 },
-      { day: 'Tue', orders: 19, revenue: 29000 },
-      { day: 'Wed', orders: 15, revenue: 23500 },
-      { day: 'Thu', orders: 25, revenue: 38000 },
-      { day: 'Fri', orders: 32, revenue: 48500 },
-      { day: 'Sat', orders: 28, revenue: 42000 },
-      { day: 'Sun', orders: 25, revenue: 45500 }
+      { day: 'Mon', orders: 0, revenue: 0 },
+      { day: 'Tue', orders: 0, revenue: 0 },
+      { day: 'Wed', orders: 0, revenue: 0 },
+      { day: 'Thu', orders: 0, revenue: 0 },
+      { day: 'Fri', orders: 0, revenue: 0 },
+      { day: 'Sat', orders: 0, revenue: 0 },
+      { day: 'Sun', orders: 0, revenue: 0 }
     ]
+  });
+
+  useEffect(() => {
+    loadAnalytics();
+  }, []);
+
+  const loadAnalytics = async () => {
+    try {
+      const res = await analyticsAPI.getRetailerStats();
+      setStats({
+        totalOrders: res.data.total_orders || 0,
+        totalRevenue: res.data.total_revenue || 0,
+        avgOrderValue: res.data.avg_order_value || 0,
+        topProducts: res.data.top_products || [],
+        weeklyData: stats.weeklyData // Keep mock weekly data for now
+      });
+    } catch (error) {
+      console.error('Failed to load analytics:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const maxRevenue = Math.max(...stats.weeklyData.map(d => d.revenue));
+  const maxRevenue = Math.max(...stats.weeklyData.map(d => d.revenue), 1);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <motion.div
