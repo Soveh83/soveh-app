@@ -506,6 +506,10 @@ async def create_order(order_data: OrderCreate, current_user: User = Depends(get
         order_dict = order.dict()
         await db.orders.insert_one(order_dict)
         
+        # Remove MongoDB _id field for JSON serialization
+        if "_id" in order_dict:
+            del order_dict["_id"]
+        
         # Handle payment
         if order_data.payment_mode == "online":
             # Create Razorpay order
