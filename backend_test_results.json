@@ -1,74 +1,98 @@
 {
-  "total_tests": 11,
-  "passed_tests": 6,
+  "total_tests": 15,
+  "passed_tests": 10,
   "failed_tests": 5,
-  "success_rate": 54.54545454545454,
+  "success_rate": 66.66666666666666,
   "test_results": [
     {
       "test": "Root Endpoint",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.291229"
+      "timestamp": "2026-02-07T14:10:28.189202"
     },
     {
       "test": "Health Check",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.327801"
+      "timestamp": "2026-02-07T14:10:28.224270"
     },
     {
       "test": "Send OTP",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.367693"
+      "timestamp": "2026-02-07T14:10:28.260077"
     },
     {
-      "test": "Verify OTP (123456)",
-      "success": false,
-      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
-      "timestamp": "2026-02-07T14:08:38.403909"
-    },
-    {
-      "test": "Verify OTP (000000)",
-      "success": false,
-      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
-      "timestamp": "2026-02-07T14:08:38.445942"
-    },
-    {
-      "test": "Verify OTP (111111)",
-      "success": false,
-      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
-      "timestamp": "2026-02-07T14:08:38.483967"
+      "test": "Verify OTP (622456)",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:10:28.300841"
     },
     {
       "test": "Get Categories",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.558583"
+      "timestamp": "2026-02-07T14:10:28.376837"
     },
     {
       "test": "Get All Products",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.596658"
+      "timestamp": "2026-02-07T14:10:28.415527"
     },
     {
       "test": "Get Products by Category",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-07T14:08:38.642652"
+      "timestamp": "2026-02-07T14:10:28.449345"
     },
     {
       "test": "Get Specific Product",
-      "success": false,
-      "details": "Status: 520, Response: Internal Server Error",
-      "timestamp": "2026-02-07T14:08:38.683270"
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:10:28.485689"
     },
     {
       "test": "Get User Orders",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:10:28.521694"
+    },
+    {
+      "test": "Create Order",
       "success": false,
-      "details": "Status: 403, Response: {'detail': 'Not authenticated'}",
-      "timestamp": "2026-02-07T14:08:38.722277"
+      "details": "Status: 520, Response: Internal Server Error",
+      "timestamp": "2026-02-07T14:10:28.560100"
+    },
+    {
+      "test": "Admin Dashboard",
+      "success": false,
+      "details": "Status: 403, Response: {'detail': 'Not authorized'}",
+      "timestamp": "2026-02-07T14:10:28.596601"
+    },
+    {
+      "test": "Get All Users",
+      "success": false,
+      "details": "Status: 403, Response: {'detail': 'Not authorized'}",
+      "timestamp": "2026-02-07T14:10:28.630606"
+    },
+    {
+      "test": "Get Pending Retailers",
+      "success": false,
+      "details": "Status: 403, Response: {'detail': 'Not authorized'}",
+      "timestamp": "2026-02-07T14:10:28.675081"
+    },
+    {
+      "test": "Get Credit Balance",
+      "success": false,
+      "details": "Status: 404, Response: {'detail': 'Retailer not found'}",
+      "timestamp": "2026-02-07T14:10:28.707132"
+    },
+    {
+      "test": "Get Credit Ledger",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:10:28.744969"
     }
   ]
 }
