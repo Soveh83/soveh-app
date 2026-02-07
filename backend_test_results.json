@@ -1,0 +1,74 @@
+{
+  "total_tests": 11,
+  "passed_tests": 6,
+  "failed_tests": 5,
+  "success_rate": 54.54545454545454,
+  "test_results": [
+    {
+      "test": "Root Endpoint",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.291229"
+    },
+    {
+      "test": "Health Check",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.327801"
+    },
+    {
+      "test": "Send OTP",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.367693"
+    },
+    {
+      "test": "Verify OTP (123456)",
+      "success": false,
+      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
+      "timestamp": "2026-02-07T14:08:38.403909"
+    },
+    {
+      "test": "Verify OTP (000000)",
+      "success": false,
+      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
+      "timestamp": "2026-02-07T14:08:38.445942"
+    },
+    {
+      "test": "Verify OTP (111111)",
+      "success": false,
+      "details": "Status: 400, Response: {'detail': 'Invalid or expired OTP'}",
+      "timestamp": "2026-02-07T14:08:38.483967"
+    },
+    {
+      "test": "Get Categories",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.558583"
+    },
+    {
+      "test": "Get All Products",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.596658"
+    },
+    {
+      "test": "Get Products by Category",
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-07T14:08:38.642652"
+    },
+    {
+      "test": "Get Specific Product",
+      "success": false,
+      "details": "Status: 520, Response: Internal Server Error",
+      "timestamp": "2026-02-07T14:08:38.683270"
+    },
+    {
+      "test": "Get User Orders",
+      "success": false,
+      "details": "Status: 403, Response: {'detail': 'Not authenticated'}",
+      "timestamp": "2026-02-07T14:08:38.722277"
+    }
+  ]
+}
