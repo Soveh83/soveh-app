@@ -1,0 +1,114 @@
+=== COMPLETE PROJECT FILE LISTING ===
+Generated: Sat Feb  7 17:30:08 UTC 2026
+
+### BACKEND FILES ###
+/app/backend/.env
+/app/backend/add_products.py
+/app/backend/admin_auth.py
+/app/backend/ai_service.py
+/app/backend/cart_routes.py
+/app/backend/email_service.py
+/app/backend/enhanced_models.py
+/app/backend/kyc_routes.py
+/app/backend/requirements.txt
+/app/backend/requirements_full.txt
+/app/backend/seed_data.py
+/app/backend/server.py
+/app/backend/sms_service.py
+/app/backend/tests/test_products_crud.py
+/app/backend/update_images.py
+/app/backend/websocket_handler.py
+
+### FRONTEND SOURCE FILES ###
+/app/frontend/src/App.css
+/app/frontend/src/App.js
+/app/frontend/src/components/admin/AdminDashboard.jsx
+/app/frontend/src/components/ai/AIChatbot.jsx
+/app/frontend/src/components/auth/AuthScreen.jsx
+/app/frontend/src/components/customer/CustomerDashboard.jsx
+/app/frontend/src/components/delivery/DeliveryDashboard.jsx
+/app/frontend/src/components/kyc/KYCUpload.jsx
+/app/frontend/src/components/profile/ProfilePages.jsx
+/app/frontend/src/components/retailer/RetailerDashboard.jsx
+/app/frontend/src/components/tracking/LiveTracking.jsx
+/app/frontend/src/components/ui/accordion.jsx
+/app/frontend/src/components/ui/alert-dialog.jsx
+/app/frontend/src/components/ui/alert.jsx
+/app/frontend/src/components/ui/aspect-ratio.jsx
+/app/frontend/src/components/ui/avatar.jsx
+/app/frontend/src/components/ui/badge.jsx
+/app/frontend/src/components/ui/breadcrumb.jsx
+/app/frontend/src/components/ui/button.jsx
+/app/frontend/src/components/ui/calendar.jsx
+/app/frontend/src/components/ui/card.jsx
+/app/frontend/src/components/ui/carousel.jsx
+/app/frontend/src/components/ui/checkbox.jsx
+/app/frontend/src/components/ui/collapsible.jsx
+/app/frontend/src/components/ui/command.jsx
+/app/frontend/src/components/ui/context-menu.jsx
+/app/frontend/src/components/ui/dialog.jsx
+/app/frontend/src/components/ui/drawer.jsx
+/app/frontend/src/components/ui/dropdown-menu.jsx
+/app/frontend/src/components/ui/form.jsx
+/app/frontend/src/components/ui/hover-card.jsx
+/app/frontend/src/components/ui/index.jsx
+/app/frontend/src/components/ui/input-otp.jsx
+/app/frontend/src/components/ui/input.jsx
+/app/frontend/src/components/ui/label.jsx
+/app/frontend/src/components/ui/menubar.jsx
+/app/frontend/src/components/ui/navigation-menu.jsx
+/app/frontend/src/components/ui/pagination.jsx
+/app/frontend/src/components/ui/popover.jsx
+/app/frontend/src/components/ui/progress.jsx
+/app/frontend/src/components/ui/radio-group.jsx
+/app/frontend/src/components/ui/resizable.jsx
+/app/frontend/src/components/ui/scroll-area.jsx
+/app/frontend/src/components/ui/select.jsx
+/app/frontend/src/components/ui/separator.jsx
+/app/frontend/src/components/ui/sheet.jsx
+/app/frontend/src/components/ui/skeleton.jsx
+/app/frontend/src/components/ui/slider.jsx
+/app/frontend/src/components/ui/sonner.jsx
+/app/frontend/src/components/ui/switch.jsx
+/app/frontend/src/components/ui/table.jsx
+/app/frontend/src/components/ui/tabs.jsx
+/app/frontend/src/components/ui/textarea.jsx
+/app/frontend/src/components/ui/toast.jsx
+/app/frontend/src/components/ui/toaster.jsx
+/app/frontend/src/components/ui/toggle-group.jsx
+/app/frontend/src/components/ui/toggle.jsx
+/app/frontend/src/components/ui/tooltip.jsx
+/app/frontend/src/hooks/use-toast.js
+/app/frontend/src/index.css
+/app/frontend/src/index.js
+/app/frontend/src/lib/api.js
+/app/frontend/src/lib/pushNotifications.js
+/app/frontend/src/lib/utils.js
+/app/frontend/src/store/authStore.js
+/app/frontend/src/store/cartStore.js
+
+### MOBILE APP FILES ###
+/app/mobile/soveh-mobile/App.js
+/app/mobile/soveh-mobile/app.json
+/app/mobile/soveh-mobile/eas.json
+/app/mobile/soveh-mobile/index.js
+/app/mobile/soveh-mobile/package-lock.json
+/app/mobile/soveh-mobile/package.json
+/app/mobile/soveh-mobile/src/lib/api.js
+/app/mobile/soveh-mobile/src/lib/config.js
+/app/mobile/soveh-mobile/src/navigation/index.js
+/app/mobile/soveh-mobile/src/screens/auth/AuthScreen.js
+/app/mobile/soveh-mobile/src/screens/retailer/CartScreen.js
+/app/mobile/soveh-mobile/src/screens/retailer/HomeScreen.js
+/app/mobile/soveh-mobile/src/screens/retailer/OrdersScreen.js
+/app/mobile/soveh-mobile/src/screens/retailer/ProfileScreen.js
+/app/mobile/soveh-mobile/src/screens/retailer/ShopScreen.js
+/app/mobile/soveh-mobile/src/store/index.js
+
+### CONFIG & DEPLOYMENT FILES ###
+-rw-r--r-- 1 root root   704 Feb  7 17:29 /app/.env.example
+-rw-r--r-- 1 root root 11495 Feb  7 17:26 /app/HANDOVER_DOCUMENT.md
+-rw-r--r-- 1 root root    29 Jun 18  2025 /app/README.md
+-rw-r--r-- 1 root root  1258 Feb  7 17:29 /app/docker-compose.yml
+-rwxr-xr-x 1 root root  2156 Feb  7 17:29 /app/setup.sh
+-rw-r--r-- 1 root root  4774 Jun 18  2025 /app/test_result.md
