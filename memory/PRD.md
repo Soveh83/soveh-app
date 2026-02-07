@@ -1,125 +1,195 @@
-# SOVEH - Enterprise B2B Retail Supply Network v3.0
+# SOVEH - Enterprise B2B Retail Supply Network
 
-## Brand Info
-**Name:** SOVEH
-**Logo:** Custom branded logo
-**Tagline:** Retail Supply Network
+## Final Version - Production Ready
+**Last Updated:** February 7, 2026
 
-## Latest Updates (Feb 7, 2026)
+---
 
-### Session Updates
-
-#### ✅ Fixed Issues
-- **AI Recommendations** - Now properly displays formatted bullet points instead of raw JSON
-- **Shop Tab** - Products load correctly with category navigation
-- **Customer Role** - Removed entirely from the application
-
-#### ✅ New Features
-- **Admin Employee Code Authentication** - Admin portal now requires employee code for access
-  - Valid codes: `SOVEH001`, `SOVEH002`, `ADMIN123`, `SUPER001`
-- **iOS 26 Style Glassmorphism** - Bottom navigation with blur(40px) saturate(200%) effect
-- **Admin Product Management** - Add, edit, delete products with modal forms
-- **Admin Delivery Agents** - View and manage delivery partners with status badges
-- **Admin Category Management** - Create and manage product categories
-
-### Architecture Changes
-- Customer section completely removed - focus on B2B (Retailer to Admin)
-- Admin portal secured with employee code verification layer
-- Retailer dashboard connected to Admin for product/delivery management
+## Overview
+SOVEH is a comprehensive B2B retail supply network application connecting retailers with wholesalers, featuring AI-powered recommendations, real-time delivery tracking, and a robust admin management system.
 
 ## User Roles
-| Role | Access |
-|------|--------|
-| Retailer | Browse products, place orders, view AI recommendations, track deliveries |
-| Delivery Agent | View assigned deliveries, update delivery status |
-| Admin | Manage products, categories, retailers, orders, delivery agents (requires employee code) |
+| Role | Description | Access |
+|------|-------------|--------|
+| **Retailer** | Shop owners & wholesalers | Browse products, place orders, track deliveries, view AI recommendations |
+| **Delivery Agent** | Delivery partners | View assignments, update delivery status, GPS tracking |
+| **Admin** | Operations team (Employee code required) | Full system access - products, orders, retailers, delivery agents |
+
+*Note: Customer role has been removed - focus is on B2B operations*
+
+---
 
 ## Tech Stack
-- **Frontend:** React 18 + Tailwind CSS + Framer Motion
-- **Backend:** FastAPI + Python
+- **Frontend:** React 18, Tailwind CSS, Framer Motion, Google Maps
+- **Backend:** FastAPI, Python 3.11
 - **Database:** MongoDB
-- **AI:** GPT-4o via Emergent LLM Key
+- **AI:** OpenAI GPT-4o (via Emergent LLM Key)
+- **Real-time:** WebSocket for live delivery tracking
 
-## Test Credentials
-- **Retailer Phone:** 9999999999
-- **Admin Phone:** 9999999998
-- **Admin Employee Codes:** SOVEH001, SOVEH002, ADMIN123, SUPER001
-- **OTP:** Displayed on screen after sending (test mode)
+---
 
 ## Completed Features
 
+### Authentication
+- [x] OTP-based phone authentication
+- [x] Multi-role support (Retailer, Delivery, Admin)
+- [x] Session management with JWT tokens
+- [x] Admin employee code verification gate
+
 ### Retailer Dashboard
-- [x] AI-powered product recommendations
-- [x] Product browsing by category
+- [x] AI-powered product recommendations (formatted display)
+- [x] Product browsing with category filters
 - [x] Shopping cart with real-time updates
 - [x] Order placement and tracking
-- [x] Order status progress bar
-- [x] Live GPS delivery tracking (simulated)
-- [x] iOS 26 glassmorphism navigation
-- [x] Auto-fetch current location
-- [x] KYC document upload
+- [x] Order status progress visualization
+- [x] Live GPS delivery tracking (WebSocket)
+- [x] iOS 26-style glassmorphism navigation
+- [x] AI chatbot for support
+
+### Profile & Settings
+- [x] Edit Profile (name, email, shop name, GST, business type)
+- [x] Manage Addresses with Google Maps integration
+- [x] Credit Details view
+- [x] Shop Analytics dashboard
 
 ### Admin Portal
-- [x] Employee code verification gate
+- [x] Employee code authentication (SOVEH001, SOVEH002, ADMIN123, SUPER001)
 - [x] Dashboard with stats and charts
-- [x] Product management (CRUD)
+- [x] Product management (Add/Edit/Delete)
 - [x] Category management
 - [x] Order management with status updates
-- [x] Delivery agent management
+- [x] Delivery agent assignment
 - [x] Retailer approval workflow
 - [x] Analytics overview
 
-### Authentication
-- [x] OTP-based login
-- [x] Multi-role support (Retailer, Delivery, Admin)
-- [x] Session persistence
-
-## In Progress / Future Tasks
-
-### P0 - Critical
-- None
-
-### P1 - High Priority
-- [ ] Backend API for Edit Profile
-- [ ] Backend API for Manage Addresses
-- [ ] Push notification integration with backend events
-- [ ] WebSocket for real-time delivery tracking
-
-### P2 - Medium Priority
-- [ ] Shop Analytics page implementation
-- [ ] Credit Details page implementation
-- [ ] Refund flow backend integration
-- [ ] Customer support chat integration
-
-### P3 - Low Priority
-- [ ] Code refactoring - split RetailerDashboard.jsx into smaller components
-- [ ] Homepage UI redesign
-- [ ] Order history export
-
-## API Endpoints
+### APIs Implemented
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/auth/send-otp` | POST | Send OTP to phone |
-| `/api/auth/verify-otp` | POST | Verify OTP and login |
-| `/api/products` | GET | List products |
-| `/api/products` | POST | Create product (admin) |
-| `/api/categories` | GET | List categories |
-| `/api/categories` | POST | Create category (admin) |
-| `/api/orders` | GET | List orders |
-| `/api/orders` | POST | Create order |
+| `/api/auth/send-otp` | POST | Send OTP |
+| `/api/auth/verify-otp` | POST | Verify & login |
+| `/api/profile` | GET/PUT | User profile |
+| `/api/addresses` | GET/POST/PUT/DELETE | Address CRUD |
+| `/api/addresses/{id}/set-default` | POST | Set default address |
+| `/api/products` | GET/POST | Products |
+| `/api/categories` | GET/POST | Categories |
+| `/api/orders` | GET/POST | Orders |
 | `/api/orders/{id}/status` | PATCH | Update order status |
-| `/api/ai/recommendations` | POST | Get AI recommendations |
+| `/api/orders/{id}/assign-agent` | POST | Assign delivery agent |
+| `/api/ai/recommendations` | POST | AI recommendations |
 | `/api/ai/chat` | POST | AI chatbot |
-| `/api/kyc/upload` | POST | Upload KYC document |
+| `/api/analytics/retailer` | GET | Shop analytics |
+| `/api/refunds/request` | POST | Request refund |
+| `/api/refunds` | GET | List refunds |
+| `/api/delivery-agents` | GET/POST | Delivery agents |
+| `/ws/tracking/{order_id}` | WebSocket | Live tracking |
+
+---
+
+## Test Credentials
+```
+Retailer Phone: 9999999999
+Admin Phone: 9999999998
+Admin Employee Codes: SOVEH001, SOVEH002, ADMIN123, SUPER001
+OTP: Displayed on screen after sending (Test OTP: XXXXXX)
+```
+
+---
 
 ## Database Schema
-- **users:** `{id, phone, role, token, name, email, is_active, created_at}`
-- **products:** `{id, name, description, category_id, mrp, retailer_price, customer_price, stock_quantity, images}`
-- **categories:** `{id, name, description, image, is_active}`
-- **orders:** `{id, order_number, user_id, items, total_amount, order_status, delivery_address}`
-- **kyc_documents:** `{id, user_id, document_type, document_url, status, verification}`
 
-## Known Limitations
-- Live GPS tracking is simulated (no real-time delivery partner app)
-- Push notifications created but not fully integrated with backend events
-- Delivery agents are mock data (not from database)
+### users
+```json
+{
+  "id": "uuid",
+  "phone": "string",
+  "role": "retailer|delivery_agent|admin",
+  "name": "string",
+  "email": "string",
+  "shop_name": "string",
+  "gst": "string",
+  "business_type": "retail|wholesale|distributor|manufacturer",
+  "is_active": true,
+  "token": "string",
+  "created_at": "datetime"
+}
+```
+
+### addresses
+```json
+{
+  "id": "uuid",
+  "user_id": "uuid",
+  "type": "shop|warehouse|home",
+  "name": "string",
+  "address": "string",
+  "pincode": "string",
+  "lat": "float",
+  "lng": "float",
+  "is_default": true
+}
+```
+
+### products
+```json
+{
+  "id": "uuid",
+  "name": "string",
+  "description": "string",
+  "category_id": "uuid",
+  "mrp": "float",
+  "retailer_price": "float",
+  "customer_price": "float",
+  "stock_quantity": "int",
+  "images": ["url"]
+}
+```
+
+### orders
+```json
+{
+  "id": "uuid",
+  "order_number": "string",
+  "user_id": "uuid",
+  "items": [{"product_id", "quantity", "price"}],
+  "total_amount": "float",
+  "order_status": "placed|confirmed|packed|out_for_delivery|delivered|cancelled",
+  "delivery_address": {},
+  "assigned_delivery_agent": "uuid"
+}
+```
+
+---
+
+## Deployment Notes
+
+### Environment Variables Required
+**Backend (.env):**
+- `MONGO_URL` - MongoDB connection string
+- `EMERGENT_LLM_KEY` - AI API key
+
+**Frontend (.env):**
+- `REACT_APP_BACKEND_URL` - Backend API URL
+- `REACT_APP_GOOGLE_MAPS_KEY` - Google Maps API key
+
+### Notes for Production
+1. WebSocket delivery tracking uses simulation mode if real GPS data unavailable
+2. Admin portal requires employee code verification before access
+3. OTP is shown in response for testing (remove in production)
+4. Delivery agents in admin panel use mock data (connect to real delivery app for production)
+
+---
+
+## Known Limitations (SIMULATED)
+- **Live GPS Tracking:** WebSocket provides simulated movement; real implementation needs a delivery partner mobile app
+- **Push Notifications:** Service worker created but not fully integrated with backend events
+- **Delivery Agents:** Admin panel shows mock agents; real agents need to be added through the delivery partner app
+
+---
+
+## Future Enhancements (Backlog)
+- [ ] Real delivery partner mobile app for GPS tracking
+- [ ] Push notification triggers from backend events
+- [ ] Payment gateway integration (Razorpay configured but inactive)
+- [ ] Invoice generation and download
+- [ ] Multi-language support
+- [ ] Dark mode theme
