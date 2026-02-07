@@ -445,6 +445,9 @@ async def get_product(product_id: str):
     product = await db.products.find_one({"id": product_id})
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
+    # Remove MongoDB _id field for JSON serialization
+    if "_id" in product:
+        del product["_id"]
     return product
 
 # ==================== CATEGORY ENDPOINTS ====================
