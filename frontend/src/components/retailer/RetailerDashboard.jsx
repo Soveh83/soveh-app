@@ -6,11 +6,12 @@ import { productsAPI, categoriesAPI, ordersAPI, creditAPI, aiAPI } from '../../l
 import { Card, Button, Badge, Spinner, Modal, StaggerContainer, StaggerItem, PageTransition, Skeleton } from '../ui';
 import { AIChatbot } from '../ai/AIChatbot';
 import { KYCUpload } from '../kyc/KYCUpload';
+import { EditProfile, ManageAddresses, CreditDetails, ShopAnalytics } from '../profile/ProfilePages';
 import { 
   Home, Grid3X3, ShoppingCart, Package, User,
   Search, Bell, MapPin, ChevronRight, Plus, Minus,
   TrendingUp, Clock, Percent, Star, Wallet, Sparkles,
-  FileCheck, Heart, Zap, ArrowRight, Shield
+  FileCheck, Heart, Zap, ArrowRight, Shield, BarChart3
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
