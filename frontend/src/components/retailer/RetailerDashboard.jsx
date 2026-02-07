@@ -830,10 +830,9 @@ const OrderDetailView = ({ order, onClose }) => {
           <h3 className="font-bold text-slate-900">Live Tracking</h3>
           <button onClick={() => setShowLiveTracking(false)} className="text-sm text-blue-600">View Details</button>
         </div>
-        <LiveDeliveryTracker 
+        <LiveTracking 
           order={order}
-          deliveryLocation={{ lat: 19.070, lng: 72.870 }}
-          destinationLocation={{ lat: 19.082, lng: 72.883 }}
+          onBack={() => setShowLiveTracking(false)}
         />
       </div>
     );
