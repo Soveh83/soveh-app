@@ -825,6 +825,9 @@ logger = logging.getLogger(__name__)
 async def startup_db_client():
     """Create MongoDB indexes for performance"""
     try:
+        # Set db for KYC routes
+        set_kyc_db(db)
+        
         await db.users.create_index("phone", unique=True)
         await db.users.create_index("token")
         await db.users.create_index("role")
