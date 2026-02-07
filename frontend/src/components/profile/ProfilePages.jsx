@@ -132,8 +132,8 @@ export const EditProfile = ({ user, onBack, onSave }) => {
         
         <Input
           label="Shop/Business Name"
-          value={formData.shopName}
-          onChange={(e) => setFormData({ ...formData, shopName: e.target.value })}
+          value={formData.shop_name}
+          onChange={(e) => setFormData({ ...formData, shop_name: e.target.value })}
           placeholder="Your Shop Name"
           data-testid="input-shop"
         />
@@ -153,9 +153,9 @@ export const EditProfile = ({ user, onBack, onSave }) => {
               <motion.button
                 key={type}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setFormData({ ...formData, businessType: type })}
+                onClick={() => setFormData({ ...formData, business_type: type })}
                 className={`p-3 rounded-xl border-2 text-sm font-medium capitalize transition-all ${
-                  formData.businessType === type
+                  formData.business_type === type
                     ? 'border-blue-600 bg-blue-50 text-blue-700'
                     : 'border-slate-200 text-slate-600 hover:border-slate-300'
                 }`}
