@@ -797,16 +797,35 @@ const TrackingProgress = ({ status }) => {
 // Order Detail View with Actions
 const OrderDetailView = ({ order, onClose }) => {
   const [cancelling, setCancelling] = useState(false);
+  const [showLiveTracking, setShowLiveTracking] = useState(order.order_status === 'out_for_delivery');
 
   const handleCancel = async () => {
     setCancelling(true);
     try {
       await ordersAPI.updateStatus(order.id, 'cancelled');
       toast.success('Order cancelled');
+      pushService.showNotification('Order Cancelled', { body: `Order ${order.order_number} has been cancelled` });
       onClose();
     } catch (e) { toast.error('Failed to cancel'); }
     finally { setCancelling(false); }
   };
+
+  // Show live tracking for out_for_delivery orders
+  if (showLiveTracking && order.order_status === 'out_for_delivery') {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-bold text-slate-900">Live Tracking</h3>
+          <button onClick={() => setShowLiveTracking(false)} className="text-sm text-blue-600">View Details</button>
+        </div>
+        <LiveDeliveryTracker 
+          order={order}
+          deliveryLocation={{ lat: 19.070, lng: 72.870 }}
+          destinationLocation={{ lat: 19.082, lng: 72.883 }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -818,6 +837,13 @@ const OrderDetailView = ({ order, onClose }) => {
            order.order_status === 'delivered' ? 'Delivered successfully' : 'Processing your order'}
         </p>
       </div>
+      
+      {/* Live Tracking Button for out_for_delivery */}
+      {order.order_status === 'out_for_delivery' && (
+        <Button fullWidth role="retailer" onClick={() => setShowLiveTracking(true)}>
+          <Navigation className="w-4 h-4 mr-2" /> Track Live on Map
+        </Button>
+      )}
 
       {/* Live Map Placeholder */}
       {order.order_status === 'out_for_delivery' && (
