@@ -91,6 +91,41 @@ export const aiAPI = {
   chat: (message) => api.post('/ai/chat', { message })
 };
 
+// Profile APIs
+export const profileAPI = {
+  get: () => api.get('/profile'),
+  update: (data) => api.put('/profile', data)
+};
+
+// Address APIs
+export const addressAPI = {
+  getAll: () => api.get('/addresses'),
+  add: (data) => api.post('/addresses', data),
+  update: (id, data) => api.put(`/addresses/${id}`, data),
+  delete: (id) => api.delete(`/addresses/${id}`),
+  setDefault: (id) => api.post(`/addresses/${id}/set-default`)
+};
+
+// Delivery Agent APIs
+export const deliveryAgentAPI = {
+  getAll: () => api.get('/delivery-agents'),
+  create: (data) => api.post('/delivery-agents', data),
+  updateStatus: (id, status) => api.patch(`/delivery-agents/${id}/status`, null, { params: { status } }),
+  assignToOrder: (orderId, agentId) => api.post(`/orders/${orderId}/assign-agent`, null, { params: { agent_id: agentId } })
+};
+
+// Refund APIs
+export const refundAPI = {
+  request: (data) => api.post('/refunds/request', data),
+  getAll: () => api.get('/refunds'),
+  updateStatus: (id, status) => api.patch(`/refunds/${id}/status`, null, { params: { status } })
+};
+
+// Analytics APIs
+export const analyticsAPI = {
+  getRetailerStats: () => api.get('/analytics/retailer')
+};
+
 // KYC APIs
 export const kycAPI = {
   uploadDocument: (documentType, imageBase64, userId) => 
