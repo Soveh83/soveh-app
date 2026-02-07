@@ -1,0 +1,137 @@
+{
+  "identity": {
+    "name": "SREYANIMTI",
+    "tone": "Enterprise, Efficient, Trustworthy, Modern",
+    "aesthetic": "Clean, High-Density, Role-Coded, Blinkit-Speed"
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Manrope, sans-serif",
+      "weights": ["600", "700", "800"],
+      "usage": "All page titles, section headers, and modal titles. DO NOT use Inter for headings."
+    },
+    "body": {
+      "font_family": "Inter, sans-serif",
+      "weights": ["400", "500"],
+      "usage": "Paragraphs, inputs, data tables, labels."
+    },
+    "mono": {
+      "font_family": "JetBrains Mono, monospace",
+      "usage": "Order IDs, tracking numbers, SKU codes."
+    }
+  },
+  "colors": {
+    "strategy": "Role-Based Dynamic Theming",
+    "roles": {
+      "retailer": {
+        "primary": "#2563EB",
+        "primary_foreground": "#FFFFFF",
+        "description": "Trustworthy Blue for Shop Owners"
+      },
+      "customer": {
+        "primary": "#16A34A",
+        "primary_foreground": "#FFFFFF",
+        "description": "Fresh Green for End Consumers"
+      },
+      "delivery": {
+        "primary": "#EA580C",
+        "primary_foreground": "#FFFFFF",
+        "description": "High-Vis Orange for Logistics"
+      },
+      "admin": {
+        "primary": "#DC2626",
+        "primary_foreground": "#FFFFFF",
+        "description": "Alert Red for Operations"
+      }
+    },
+    "neutrals": {
+      "background": "#F8FAFC",
+      "surface": "#FFFFFF",
+      "border": "#E2E8F0",
+      "text_primary": "#0F172A",
+      "text_secondary": "#64748B"
+    },
+    "status": {
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    }
+  },
+  "layout": {
+    "spacing_scale": "Generous (2x standard)",
+    "grid_system": {
+      "dashboard": "Bento Grid (Asymmetric)",
+      "product_list": "Dense Grid (2-4 columns mobile, 6-8 desktop)",
+      "data_table": "Compact Rows (High Density)"
+    },
+    "container": {
+      "max_width": "max-w-7xl",
+      "padding": "px-4 sm:px-6 lg:px-8"
+    },
+    "radius": {
+      "default": "rounded-lg",
+      "button": "rounded-full",
+      "card": "rounded-xl"
+    }
+  },
+  "components": {
+    "buttons": {
+      "style": "Pill-shaped or slightly rounded (rounded-lg)",
+      "interaction": "Scale down slightly on click (active:scale-95)",
+      "shadow": "shadow-sm hover:shadow-md transition-all"
+    },
+    "cards": {
+      "style": "Flat white surface, subtle border (border-slate-100), soft shadow (shadow-sm)",
+      "hover": "translate-y-[-2px] shadow-md transition-all duration-200"
+    },
+    "inputs": {
+      "style": "bg-slate-50 border-slate-200 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all",
+      "height": "h-11 (Touch-friendly)"
+    },
+    "navigation": {
+      "mobile": "Bottom Tab Bar (Fixed)",
+      "desktop": "Sidebar (Collapsible) or Top Mega-Menu"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "Use sparingly for sticky headers and toast notifications only. backdrop-blur-md bg-white/80 border-b border-white/20.",
+    "gradients": "Subtle mesh gradients for 'Offer Zones' or 'Premium' cards only. NO full-screen gradients.",
+    "shadows": "Layered shadows: shadow-sm for structure, shadow-xl for modals.",
+    "textures": "Noise texture opacity-5 on solid color backgrounds to reduce digital flatness."
+  },
+  "motion": {
+    "library": "framer-motion",
+    "transitions": {
+      "page": "opacity: 0 -> 1, y: 10 -> 0 (duration: 0.3s)",
+      "hover": "duration: 0.2s ease-out",
+      "list_item": "staggerChildren: 0.05"
+    },
+    "micro_interactions": "Heart icon burst on wishlist, Cart icon shake on add."
+  },
+  "media": {
+    "image_urls": {
+      "login_hero": "https://images.unsplash.com/photo-1740914994657-f1cdffdc418e",
+      "retailer_context": "https://images.unsplash.com/photo-1578916171728-46686eac8d58",
+      "delivery_context": "https://images.unsplash.com/photo-1764745223157-64f76610cb3c",
+      "category_vegetables": "https://images.unsplash.com/photo-1598962099619-528a224cb625",
+      "category_electronics": "https://images.unsplash.com/photo-1763634706732-d8e54d9852de"
+    },
+    "icons": "lucide-react (Default), phosphor-icons (for polished marketing sections)"
+  },
+  "accessibility": {
+    "contrast": "WCAG AA Compliant. Text-slate-900 on slate-50.",
+    "focus_states": "Visible ring-2 ring-offset-2 ring-primary",
+    "reduced_motion": "Respect prefers-reduced-motion media query"
+  },
+  "universal_guidelines": [
+    "DO NOT use generic centered layouts. Use asymmetry.",
+    "DO NOT use 'Inter' for headings.",
+    "DO NOT use transparent backgrounds for dropdowns or overlays.",
+    "ALWAYS add data-testid to interactive elements.",
+    "Use 'sonner' for toasts.",
+    "Use 'recharts' for analytics charts.",
+    "Ensure mobile responsiveness is PRIORITY #1 (Blinkit style)."
+  ],
+  "instructions_to_main_agent": "You are building a high-performance B2B app. Start by setting up the ThemeProvider to handle the role-based colors. Use the image URLs provided for the respective sections. Focus on the 'Retailer' flow first as it is the primary persona. Ensure the 'Cart' and 'Checkout' flows are frictionless."
+}
