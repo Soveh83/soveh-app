@@ -643,6 +643,10 @@ async def get_all_users(current_user: User = Depends(get_current_user), role: Op
         query["role"] = role
     
     users = await db.users.find(query).to_list(1000)
+    # Remove MongoDB _id field for JSON serialization
+    for user in users:
+        if "_id" in user:
+            del user["_id"]
     return users
 
 # ==================== SUPPORT ENDPOINTS ====================
