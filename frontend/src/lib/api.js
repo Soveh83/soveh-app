@@ -84,4 +84,26 @@ export const supportAPI = {
   getTickets: () => api.get('/support/tickets')
 };
 
+// AI APIs
+export const aiAPI = {
+  getRecommendations: (cartItems = []) => api.post('/ai/recommendations', { cart_items: cartItems }),
+  smartSearch: (query) => api.post('/ai/search', { query }),
+  chat: (message) => api.post('/ai/chat', { message })
+};
+
+// KYC APIs
+export const kycAPI = {
+  uploadDocument: (documentType, imageBase64, userId) => 
+    api.post('/kyc/upload', { document_type: documentType, image_base64: imageBase64 }, { params: { user_id: userId } }),
+  getStatus: (userId) => api.get(`/kyc/status/${userId}`),
+  analyzeShop: (imageBase64) => api.post('/kyc/analyze-shop', { document_type: 'shop_photo', image_base64: imageBase64 })
+};
+
+// Notification APIs
+export const notificationAPI = {
+  register: (token, deviceType = 'web') => api.post('/notifications/register', { token, device_type: deviceType }),
+  getAll: () => api.get('/notifications'),
+  markRead: (ids) => api.post('/notifications/mark-read', ids)
+};
+
 export default api;
