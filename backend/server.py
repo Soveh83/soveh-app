@@ -819,6 +819,360 @@ async def mark_notifications_read(notification_ids: List[str], current_user: Use
     )
     return {"success": True}
 
+# ==================== PROFILE ENDPOINTS ====================
+
+class ProfileUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    shop_name: Optional[str] = None
+    gst: Optional[str] = None
+    business_type: Optional[str] = None
+    avatar: Optional[str] = None
+
+@api_router.put("/profile")
+async def update_profile(profile_data: ProfileUpdate, current_user: User = Depends(get_current_user)):
+    """Update user profile"""
+    try:
+        update_dict = {k: v for k, v in profile_data.dict().items() if v is not None}
+        update_dict["updated_at"] = datetime.utcnow()
+        
+        await db.users.update_one(
+            {"id": current_user.id},
+            {"$set": update_dict}
+        )
+        
+        # Get updated user
+        updated_user = await db.users.find_one({"id": current_user.id})
+        if "_id" in updated_user:
+            del updated_user["_id"]
+        
+        return {"success": True, "user": updated_user}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/profile")
+async def get_profile(current_user: User = Depends(get_current_user)):
+    """Get current user profile"""
+    user = await db.users.find_one({"id": current_user.id})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if "_id" in user:
+        del user["_id"]
+    return user
+
+# ==================== ADDRESS ENDPOINTS ====================
+
+class Address(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: Optional[str] = None
+    type: str = "shop"  # shop, warehouse, home
+    name: str
+    address: str
+    pincode: str
+    city: Optional[str] = None
+    state: Optional[str] = None
+    lat: Optional[float] = None
+    lng: Optional[float] = None
+    is_default: bool = False
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+@api_router.get("/addresses")
+async def get_addresses(current_user: User = Depends(get_current_user)):
+    """Get user addresses"""
+    addresses = await db.addresses.find({"user_id": current_user.id}).to_list(50)
+    for addr in addresses:
+        if "_id" in addr:
+            del addr["_id"]
+    return addresses
+
+@api_router.post("/addresses")
+async def add_address(address: Address, current_user: User = Depends(get_current_user)):
+    """Add new address"""
+    try:
+        address_dict = address.dict()
+        address_dict["user_id"] = current_user.id
+        
+        # If this is the first address or marked as default, update others
+        if address.is_default:
+            await db.addresses.update_many(
+                {"user_id": current_user.id},
+                {"$set": {"is_default": False}}
+            )
+        
+        # Check if this is the first address
+        existing_count = await db.addresses.count_documents({"user_id": current_user.id})
+        if existing_count == 0:
+            address_dict["is_default"] = True
+        
+        await db.addresses.insert_one(address_dict)
+        
+        if "_id" in address_dict:
+            del address_dict["_id"]
+        
+        return {"success": True, "address": address_dict}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.put("/addresses/{address_id}")
+async def update_address(address_id: str, address: Address, current_user: User = Depends(get_current_user)):
+    """Update address"""
+    try:
+        address_dict = address.dict()
+        address_dict["user_id"] = current_user.id
+        address_dict["updated_at"] = datetime.utcnow()
+        
+        if address.is_default:
+            await db.addresses.update_many(
+                {"user_id": current_user.id},
+                {"$set": {"is_default": False}}
+            )
+        
+        await db.addresses.update_one(
+            {"id": address_id, "user_id": current_user.id},
+            {"$set": address_dict}
+        )
+        
+        return {"success": True, "message": "Address updated"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.delete("/addresses/{address_id}")
+async def delete_address(address_id: str, current_user: User = Depends(get_current_user)):
+    """Delete address"""
+    result = await db.addresses.delete_one({"id": address_id, "user_id": current_user.id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Address not found")
+    return {"success": True, "message": "Address deleted"}
+
+@api_router.post("/addresses/{address_id}/set-default")
+async def set_default_address(address_id: str, current_user: User = Depends(get_current_user)):
+    """Set address as default"""
+    # Clear all defaults first
+    await db.addresses.update_many(
+        {"user_id": current_user.id},
+        {"$set": {"is_default": False}}
+    )
+    
+    # Set this one as default
+    result = await db.addresses.update_one(
+        {"id": address_id, "user_id": current_user.id},
+        {"$set": {"is_default": True}}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Address not found")
+    
+    return {"success": True, "message": "Default address updated"}
+
+# ==================== DELIVERY AGENTS ENDPOINTS ====================
+
+class DeliveryAgent(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    name: str
+    phone: str
+    vehicle_number: Optional[str] = None
+    vehicle_type: Optional[str] = "bike"  # bike, scooter, van
+    status: str = "available"  # available, on_delivery, offline
+    current_location: Optional[Dict[str, float]] = None
+    total_deliveries: int = 0
+    rating: float = 4.5
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+@api_router.get("/delivery-agents")
+async def get_delivery_agents(current_user: User = Depends(get_current_user)):
+    """Get all delivery agents (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    agents = await db.delivery_agents.find({"is_active": True}).to_list(100)
+    for agent in agents:
+        if "_id" in agent:
+            del agent["_id"]
+    return agents
+
+@api_router.post("/delivery-agents")
+async def create_delivery_agent(agent: DeliveryAgent, current_user: User = Depends(get_current_user)):
+    """Create delivery agent (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    agent_dict = agent.dict()
+    await db.delivery_agents.insert_one(agent_dict)
+    if "_id" in agent_dict:
+        del agent_dict["_id"]
+    return {"success": True, "agent": agent_dict}
+
+@api_router.patch("/delivery-agents/{agent_id}/status")
+async def update_agent_status(agent_id: str, status: str, current_user: User = Depends(get_current_user)):
+    """Update delivery agent status"""
+    await db.delivery_agents.update_one(
+        {"id": agent_id},
+        {"$set": {"status": status, "updated_at": datetime.utcnow()}}
+    )
+    return {"success": True, "message": "Status updated"}
+
+@api_router.post("/orders/{order_id}/assign-agent")
+async def assign_delivery_agent(order_id: str, agent_id: str, current_user: User = Depends(get_current_user)):
+    """Assign delivery agent to order (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    # Update order
+    await db.orders.update_one(
+        {"id": order_id},
+        {"$set": {
+            "assigned_delivery_agent": agent_id,
+            "order_status": "confirmed",
+            "updated_at": datetime.utcnow()
+        }}
+    )
+    
+    # Update agent status
+    await db.delivery_agents.update_one(
+        {"id": agent_id},
+        {"$set": {"status": "on_delivery"}}
+    )
+    
+    # Create notification
+    order = await db.orders.find_one({"id": order_id})
+    if order:
+        notification = {
+            "id": str(uuid.uuid4()),
+            "user_id": order["user_id"],
+            "title": "Delivery Agent Assigned",
+            "body": f"Your order {order.get('order_number')} has been assigned to a delivery agent.",
+            "type": "order_update",
+            "read": False,
+            "created_at": datetime.utcnow().isoformat()
+        }
+        await db.notifications.insert_one(notification)
+    
+    return {"success": True, "message": "Agent assigned"}
+
+# ==================== REFUND ENDPOINTS ====================
+
+class RefundRequest(BaseModel):
+    order_id: str
+    reason: str
+    items: Optional[List[Dict]] = None
+    refund_amount: Optional[float] = None
+
+@api_router.post("/refunds/request")
+async def request_refund(refund_data: RefundRequest, current_user: User = Depends(get_current_user)):
+    """Request a refund for an order"""
+    try:
+        # Get the order
+        order = await db.orders.find_one({"id": refund_data.order_id, "user_id": current_user.id})
+        if not order:
+            raise HTTPException(status_code=404, detail="Order not found")
+        
+        # Calculate refund amount if not provided
+        refund_amount = refund_data.refund_amount or order.get("total_amount", 0)
+        
+        refund = {
+            "id": str(uuid.uuid4()),
+            "order_id": refund_data.order_id,
+            "user_id": current_user.id,
+            "reason": refund_data.reason,
+            "items": refund_data.items or order.get("items", []),
+            "refund_amount": refund_amount,
+            "status": "pending",  # pending, approved, rejected, completed
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow()
+        }
+        
+        await db.refunds.insert_one(refund)
+        
+        # Update order status
+        await db.orders.update_one(
+            {"id": refund_data.order_id},
+            {"$set": {"refund_status": "requested", "updated_at": datetime.utcnow()}}
+        )
+        
+        if "_id" in refund:
+            del refund["_id"]
+        
+        return {"success": True, "refund": refund}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/refunds")
+async def get_refunds(current_user: User = Depends(get_current_user)):
+    """Get user's refund requests"""
+    query = {"user_id": current_user.id}
+    if current_user.role in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        query = {}  # Admins see all
+    
+    refunds = await db.refunds.find(query).sort("created_at", -1).to_list(50)
+    for r in refunds:
+        if "_id" in r:
+            del r["_id"]
+    return refunds
+
+@api_router.patch("/refunds/{refund_id}/status")
+async def update_refund_status(refund_id: str, status: str, current_user: User = Depends(get_current_user)):
+    """Update refund status (admin only)"""
+    if current_user.role not in [UserRole.ADMIN, UserRole.SUPER_ADMIN]:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    
+    await db.refunds.update_one(
+        {"id": refund_id},
+        {"$set": {"status": status, "updated_at": datetime.utcnow()}}
+    )
+    
+    # If approved, update order
+    if status == "approved":
+        refund = await db.refunds.find_one({"id": refund_id})
+        if refund:
+            await db.orders.update_one(
+                {"id": refund["order_id"]},
+                {"$set": {"refund_status": "approved", "updated_at": datetime.utcnow()}}
+            )
+    
+    return {"success": True, "message": "Refund status updated"}
+
+# ==================== ANALYTICS ENDPOINTS ====================
+
+@api_router.get("/analytics/retailer")
+async def get_retailer_analytics(current_user: User = Depends(get_current_user)):
+    """Get analytics for retailer dashboard"""
+    try:
+        # Get orders for this user
+        orders = await db.orders.find({"user_id": current_user.id}).to_list(1000)
+        
+        total_orders = len(orders)
+        total_revenue = sum(o.get("total_amount", 0) for o in orders)
+        avg_order_value = total_revenue / total_orders if total_orders > 0 else 0
+        
+        # Group by product
+        product_sales = {}
+        for order in orders:
+            for item in order.get("items", []):
+                name = item.get("product_name", "Unknown")
+                if name not in product_sales:
+                    product_sales[name] = {"quantity": 0, "revenue": 0}
+                product_sales[name]["quantity"] += item.get("quantity", 0)
+                product_sales[name]["revenue"] += item.get("total", 0)
+        
+        top_products = sorted(
+            [{"name": k, **v} for k, v in product_sales.items()],
+            key=lambda x: x["revenue"],
+            reverse=True
+        )[:5]
+        
+        return {
+            "total_orders": total_orders,
+            "total_revenue": total_revenue,
+            "avg_order_value": avg_order_value,
+            "top_products": top_products
+        }
+    except Exception as e:
+        return {"total_orders": 0, "total_revenue": 0, "avg_order_value": 0, "top_products": []}
+
 # Include KYC router
 api_router.include_router(kyc_router)
 
