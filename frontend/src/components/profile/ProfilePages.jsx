@@ -377,7 +377,7 @@ export const ManageAddresses = ({ onBack }) => {
                   </motion.button>
                 </div>
               </div>
-              {!address.isDefault && (
+              {!address.is_default && (
                 <button
                   onClick={() => handleSetDefault(address.id)}
                   className="mt-3 text-sm text-blue-600 font-medium flex items-center"
