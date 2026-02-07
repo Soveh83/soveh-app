@@ -757,14 +757,14 @@ const OrdersTab = () => {
 };
 
 // Profile Tab
-const ProfileTab = ({ user, onLogout, onShowKYC }) => {
+const ProfileTab = ({ user, onLogout, onShowKYC, onNavigate }) => {
   const menuItems = [
-    { icon: User, label: 'Edit Profile', action: () => {} },
-    { icon: MapPin, label: 'Manage Addresses', action: () => {} },
+    { icon: User, label: 'Edit Profile', page: 'edit-profile' },
+    { icon: MapPin, label: 'Manage Addresses', page: 'addresses', badge: 'Maps' },
     { icon: Shield, label: 'KYC Verification', action: onShowKYC, badge: 'AI Powered' },
-    { icon: Wallet, label: 'Credit Details', action: () => {} },
-    { icon: Package, label: 'Order History', action: () => {} },
-    { icon: TrendingUp, label: 'Shop Analytics', action: () => {} },
+    { icon: Wallet, label: 'Credit Details', page: 'credit' },
+    { icon: Package, label: 'Order History', page: 'orders' },
+    { icon: BarChart3, label: 'Shop Analytics', page: 'analytics' },
   ];
 
   return (
@@ -790,7 +790,8 @@ const ProfileTab = ({ user, onLogout, onShowKYC }) => {
           <motion.button
             key={index}
             whileHover={{ x: 5 }}
-            onClick={item.action}
+            onClick={() => item.action ? item.action() : onNavigate(item.page)}
+            data-testid={`menu-${item.page || 'kyc'}`}
             className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors"
           >
             <item.icon className="w-5 h-5 text-slate-500" />
