@@ -375,7 +375,7 @@ class SovehAPITester:
         }
 
 def main():
-    tester = SreyanimtiAPITester()
+    tester = SovehAPITester()
     results = tester.run_all_tests()
     
     # Save results to file
