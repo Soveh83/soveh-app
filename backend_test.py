@@ -326,7 +326,7 @@ class SreyanimtiAPITester:
 
     def run_all_tests(self):
         """Run comprehensive API tests"""
-        print("🚀 Starting SREYANIMTI API Tests...")
+        print("🚀 Starting SOVEH B2B Retail Supply Network API Tests...")
         print(f"📍 Testing against: {self.base_url}")
         
         # Test basic health
@@ -343,6 +343,15 @@ class SreyanimtiAPITester:
         
         # Test orders
         order_id = self.test_orders_api(product_id)
+        
+        # Test profile API
+        self.test_profile_api()
+        
+        # Test addresses API
+        self.test_addresses_api()
+        
+        # Test AI features
+        self.test_ai_features()
         
         # Test admin endpoints
         self.test_admin_endpoints()
