@@ -1,8 +1,8 @@
 # SOVEH Project - Quick Reference Card
 
 ## 🔗 Important URLs
-- **Live Preview:** https://soveh-retail-1.preview.emergentagent.com
-- **API Base:** https://soveh-retail-1.preview.emergentagent.com/api
+- **Live Preview:** https://repo-bridge-38.preview.emergentagent.com
+- **API Base:** https://repo-bridge-38.preview.emergentagent.com/api
 
 ---
 

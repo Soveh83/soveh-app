@@ -1,5 +1,5 @@
 // API Configuration
-export const API_URL = 'https://soveh-retail-1.preview.emergentagent.com/api';
+export const API_URL = 'https://repo-bridge-38.preview.emergentagent.com/api';
 
 // App Configuration
 export const APP_CONFIG = {

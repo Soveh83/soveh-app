@@ -57,7 +57,7 @@
 
 ### Frontend Environment (`/app/frontend/.env`)
 ```env
-REACT_APP_BACKEND_URL=https://soveh-retail-1.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://repo-bridge-38.preview.emergentagent.com
 WDS_SOCKET_PORT=443
 ENABLE_HEALTH_CHECK=false
 REACT_APP_GOOGLE_MAPS_KEY=AIzaSyDphHUTttoWlK2hqX-LsHSPGhxnF6xbqyw
@@ -213,7 +213,7 @@ EMERGENT_LLM_KEY=sk-emergent-128D2900526054b383
 
 ### Current Deployment
 - **Platform:** Emergent Preview Environment
-- **URL:** `https://soveh-retail-1.preview.emergentagent.com`
+- **URL:** `https://repo-bridge-38.preview.emergentagent.com`
 - **Backend Port:** 8001 (internal), routed via `/api` prefix
 - **Frontend Port:** 3000
 
@@ -462,5 +462,5 @@ db.products.find().pretty()
 
 For any questions regarding this handover, please contact the development team.
 
-**Preview URL:** https://soveh-retail-1.preview.emergentagent.com  
+**Preview URL:** https://repo-bridge-38.preview.emergentagent.com  
 **Repository Location:** `/app/` (frontend, backend, mobile)

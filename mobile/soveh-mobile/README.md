@@ -60,7 +60,7 @@ npx expo start
 ```
 
 ## API Configuration
-The app connects to: `https://soveh-retail-1.preview.emergentagent.com/api`
+The app connects to: `https://repo-bridge-38.preview.emergentagent.com/api`
 
 ## Test Credentials
 - Phone: 9999999999
