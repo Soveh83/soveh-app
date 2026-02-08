@@ -230,6 +230,86 @@ class SreyanimtiAPITester:
         # Test pending retailers
         self.run_test("Get Pending Retailers", "GET", "retailers/pending", 200)
 
+    def test_profile_api(self):
+        """Test profile endpoints"""
+        print("\n🔍 Testing Profile API...")
+        
+        if not self.token:
+            print("⚠️ Skipping profile tests - no authentication token")
+            return
+        
+        # Test get profile
+        profile_response = self.run_test("Get Profile", "GET", "profile", 200)
+        
+        # Test update profile
+        profile_update_data = {
+            "name": "Test Retailer",
+            "shop_name": "Test Shop",
+            "email": "test@example.com"
+        }
+        self.run_test("Update Profile", "PUT", "profile", 200, profile_update_data)
+        
+        return profile_response
+
+    def test_addresses_api(self):
+        """Test address endpoints"""
+        print("\n🔍 Testing Addresses API...")
+        
+        if not self.token:
+            print("⚠️ Skipping address tests - no authentication token")
+            return
+        
+        # Test get addresses
+        self.run_test("Get Addresses", "GET", "addresses", 200)
+        
+        # Test add address
+        address_data = {
+            "type": "shop",
+            "name": "Test Shop Address",
+            "address": "123 Test Street, Test Area",
+            "pincode": "123456",
+            "city": "Test City",
+            "state": "Test State",
+            "is_default": True
+        }
+        
+        address_response = self.run_test("Add Address", "POST", "addresses", 200, address_data)
+        
+        # If address was created successfully, test delete
+        if address_response and address_response.get('success'):
+            address_id = address_response.get('address', {}).get('id')
+            if address_id:
+                self.run_test("Delete Address", "DELETE", f"addresses/{address_id}", 200)
+                return address_id
+        
+        return None
+
+    def test_ai_features(self):
+        """Test AI-powered features"""
+        print("\n🔍 Testing AI Features...")
+        
+        if not self.token:
+            print("⚠️ Skipping AI tests - no authentication token")
+            return
+        
+        # Test AI recommendations
+        recommendations_data = {
+            "cart_items": []
+        }
+        self.run_test("AI Recommendations", "POST", "ai/recommendations", 200, recommendations_data)
+        
+        # Test AI chat
+        chat_data = {
+            "message": "What products should I stock for my retail store?"
+        }
+        self.run_test("AI Chat", "POST", "ai/chat", 200, chat_data)
+        
+        # Test AI search
+        search_data = {
+            "query": "rice products"
+        }
+        self.run_test("AI Smart Search", "POST", "ai/search", 200, search_data)
+
     def test_credit_endpoints(self):
         """Test credit-related endpoints for retailers"""
         print("\n🔍 Testing Credit Endpoints...")
