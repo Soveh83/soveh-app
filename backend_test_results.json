@@ -1,152 +1,152 @@
 {
   "total_tests": 24,
-  "passed_tests": 19,
-  "failed_tests": 5,
-  "success_rate": 79.16666666666666,
+  "passed_tests": 20,
+  "failed_tests": 4,
+  "success_rate": 83.33333333333334,
   "test_results": [
     {
       "test": "Root Endpoint",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.586109"
+      "timestamp": "2026-02-08T08:31:35.181882"
     },
     {
       "test": "Health Check",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.621861"
+      "timestamp": "2026-02-08T08:31:35.220206"
     },
     {
       "test": "Send OTP",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.662845"
+      "timestamp": "2026-02-08T08:31:35.260743"
     },
     {
-      "test": "Verify OTP (160204)",
+      "test": "Verify OTP (578637)",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.704580"
+      "timestamp": "2026-02-08T08:31:35.301499"
     },
     {
       "test": "Get Categories",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.785253"
+      "timestamp": "2026-02-08T08:31:35.340522"
     },
     {
       "test": "Get All Products",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.828273"
+      "timestamp": "2026-02-08T08:31:35.379565"
     },
     {
       "test": "Get Products by Category",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.865227"
+      "timestamp": "2026-02-08T08:31:35.417458"
     },
     {
       "test": "Get Specific Product",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.906048"
+      "timestamp": "2026-02-08T08:31:35.451095"
     },
     {
       "test": "Get User Orders",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.943513"
+      "timestamp": "2026-02-08T08:31:35.487148"
     },
     {
       "test": "Create Order",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:13.984102"
+      "timestamp": "2026-02-08T08:31:35.569054"
     },
     {
       "test": "Get Specific Order",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:14.023024"
+      "timestamp": "2026-02-08T08:31:35.608989"
     },
     {
       "test": "Get Profile",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:14.060982"
+      "timestamp": "2026-02-08T08:31:35.650703"
     },
     {
       "test": "Update Profile",
-      "success": false,
-      "details": "Exception: cannot access local variable 'response' where it is not associated with a value",
-      "timestamp": "2026-02-08T08:31:14.061651"
+      "success": true,
+      "details": "Status: 200",
+      "timestamp": "2026-02-08T08:31:35.689270"
     },
     {
       "test": "Get Addresses",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:14.098649"
+      "timestamp": "2026-02-08T08:31:35.727973"
     },
     {
       "test": "Add Address",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:14.149760"
+      "timestamp": "2026-02-08T08:31:35.766633"
     },
     {
       "test": "Delete Address",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:14.188634"
+      "timestamp": "2026-02-08T08:31:35.805978"
     },
     {
       "test": "AI Recommendations",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:16.039587"
+      "timestamp": "2026-02-08T08:31:37.783551"
     },
     {
       "test": "AI Chat",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:18.170961"
+      "timestamp": "2026-02-08T08:31:39.359097"
     },
     {
       "test": "AI Smart Search",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:18.944652"
+      "timestamp": "2026-02-08T08:31:40.054249"
     },
     {
       "test": "Admin Dashboard",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-08T08:31:18.999235"
+      "timestamp": "2026-02-08T08:31:40.089108"
     },
     {
       "test": "Get All Users",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-08T08:31:19.037465"
+      "timestamp": "2026-02-08T08:31:40.127473"
     },
     {
       "test": "Get Pending Retailers",
       "success": false,
       "details": "Status: 403, Response: {'detail': 'Not authorized'}",
-      "timestamp": "2026-02-08T08:31:19.073610"
+      "timestamp": "2026-02-08T08:31:40.173264"
     },
     {
       "test": "Get Credit Balance",
       "success": false,
       "details": "Status: 404, Response: {'detail': 'Retailer not found'}",
-      "timestamp": "2026-02-08T08:31:19.113479"
+      "timestamp": "2026-02-08T08:31:40.216697"
     },
     {
       "test": "Get Credit Ledger",
       "success": true,
       "details": "Status: 200",
-      "timestamp": "2026-02-08T08:31:19.151673"
+      "timestamp": "2026-02-08T08:31:40.253871"
     }
   ]
 }
