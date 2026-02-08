@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 import uuid
 
-class SreyanimtiAPITester:
+class SovehAPITester:
     def __init__(self, base_url="https://repo-bridge-38.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
